@@ -1,14 +1,14 @@
 package entity
 
 const (
-    USER_STATUS_ACTIVE int8 = 1 // active
-    USER_STATUS_NO_ACTIVE int8 = 3 // not active
-    USER_STATUS_BLOCK int8 = 5 // blocked, not allow to login
-    USER_STATUS_DELETED int8 = 7 // deleted
+	USER_STATUS_ACTIVE    int8 = 1 // active
+	USER_STATUS_NO_ACTIVE int8 = 3 // not active
+	USER_STATUS_BLOCK     int8 = 5 // blocked, not allow to login
+	USER_STATUS_DELETED   int8 = 7 // deleted
 
-    USER_ROLE_ADMIN int8 = 1
-    USER_ROLE_WRITER int8 = 3
-    USER_ROLE_READER int8 = 5
+	USER_ROLE_ADMIN  int8 = 1
+	USER_ROLE_WRITER int8 = 3
+	USER_ROLE_READER int8 = 5
 )
 
 type User struct {

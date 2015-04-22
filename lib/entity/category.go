@@ -7,6 +7,6 @@ type Category struct {
 	Slug        string `json:"slug"`
 	Description string `json:"desc"`
 
-    // article count
+	// article count
 	ArticleCount int `json:"article_count"`
 }
