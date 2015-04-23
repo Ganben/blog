@@ -7,6 +7,7 @@ import (
 )
 
 func Init() {
+	base.Action = core.NewAction()
 
 	if base.Command == nil {
 		base.Command = core.NewCommand()

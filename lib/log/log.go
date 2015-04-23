@@ -2,13 +2,11 @@ package log
 
 import (
 	"fmt"
-	"github.com/Unknwon/com"
 	"io"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync"
 	"time"
 )
 

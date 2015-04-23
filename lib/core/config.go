@@ -37,7 +37,7 @@ func NewConfig() *Config {
 		c.AppVersionDate = APP_VERSION
 
 		c.HttpAddress = "0.0.0.0:3030"
-		c.DataDirectory = "dat"
+		c.DataDirectory = "_dat"
 	}
 
 	return c
@@ -62,4 +62,8 @@ func (c *Config) WriteFile() error {
 		return err
 	}
 	return ioutil.WriteFile(configFile, bytes, os.ModePerm)
+}
+
+func (c *Config) Exist() bool {
+	return com.IsFile(configFile)
 }

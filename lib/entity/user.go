@@ -1,5 +1,14 @@
 package entity
 
+import (
+	"crypto/md5"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"strconv"
+	"time"
+)
+
 const (
 	USER_STATUS_ACTIVE    int8 = 1 // active
 	USER_STATUS_NO_ACTIVE int8 = 3 // not active
@@ -28,4 +37,22 @@ type User struct {
 
 	Status int8 `json:"status"`
 	Role   int8 `json:"role"`
+}
+
+func (s *User) SKey() string {
+	return fmt.Sprintf("user/user_%d", s.Id)
+}
+
+func GenerateUserPassword(password string) (string, string) {
+	// md5 to create salt
+	t := strconv.FormatInt(time.Now().UnixNano(), 10)
+	m := md5.New()
+	m.Write([]byte(t))
+	salt := hex.EncodeToString(m.Sum(nil))[:16]
+
+	// sha256 to real password
+	s := sha256.New()
+	s.Write([]byte(password))
+	s.Write([]byte(salt))
+	return hex.EncodeToString(s.Sum(nil)), salt
 }
