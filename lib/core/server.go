@@ -47,6 +47,7 @@ func (s *Server) Stop() {
 	}
 }
 
+// copy from net/http/server.go
 type tcpKeepAliveListener struct {
 	*net.TCPListener
 }
