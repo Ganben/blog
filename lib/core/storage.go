@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"reflect"
 	"sync"
 )
 
@@ -74,4 +75,36 @@ func (s *Storage) Remove(e entity.Entity) {
 	if err := os.RemoveAll(file); err != nil {
 		log.Error("Storage|Remove|%s|%s", e.SKey(), err.Error())
 	}
+}
+
+func (s *Storage) Walk(e entity.Entity, fn func(interface{})) {
+	// get directory
+	file := filepath.Join(s.directory, e.SKey()+".json")
+	dir := filepath.Dir(file)
+
+	// walk files
+	walkFn := func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if info.IsDir() {
+			return nil
+		}
+		if ext := filepath.Ext(path); ext != ".json" {
+			return nil
+		}
+		nv := reflect.New(reflect.TypeOf(e).Elem()).Interface()
+		bytes, err := ioutil.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		if err = json.Unmarshal(bytes, nv); err != nil {
+			return err
+		}
+		if fn != nil {
+			fn(nv)
+		}
+		return nil
+	}
+	filepath.Walk(dir, walkFn)
 }
