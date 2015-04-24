@@ -37,6 +37,7 @@ var (
 		// start cron
 
 		// start server
+		log.Info("Http server is running in %s", base.Config.HttpAddress)
 		base.Server = core.NewServer(base.Config.HttpAddress)
 		core.Start(base.Server)
 	}

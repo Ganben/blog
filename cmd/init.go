@@ -19,6 +19,7 @@ func Init() {
 	base.Command.Commands = []cli.Command{
 		installCommand,
 		servCommand,
+		backupCommand,
 	}
 }
 

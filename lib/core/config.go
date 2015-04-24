@@ -37,7 +37,7 @@ func NewConfig() *Config {
 		c.AppVersionDate = APP_VERSION
 
 		c.HttpAddress = "0.0.0.0:3030"
-		c.DataDirectory = "_dat"
+		c.DataDirectory = "user/data"
 	}
 
 	return c

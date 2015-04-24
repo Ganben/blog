@@ -16,7 +16,7 @@ const (
 
 var (
 	LEVEL_FLAGS  = [...]string{"DEBUG", " INFO", " WARN", "ERROR", "FATAL"}
-	globalLogger = NewLogger(os.Stderr, "[Blog]", false, false)
+	globalLogger = NewLogger(os.Stderr, "[Blog]", true, false)
 )
 
 type Logger struct {

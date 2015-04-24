@@ -63,15 +63,26 @@ type ActionResultMeta struct {
 }
 
 type ActionResult struct {
-	Meta ActionResultMeta       `json:"meta"`
-	Data map[string]interface{} `json:"data"`
+	Meta ActionResultMeta `json:"meta"`
+	Data AData            `json:"data"`
 }
+type AData map[string]interface{}
 
-func NewOKActionResult(data map[string]interface{}) *ActionResult {
+func NewOKActionResult(data AData) *ActionResult {
 	return &ActionResult{
 		Meta: ActionResultMeta{
 			Status: true,
 		},
 		Data: data,
+	}
+}
+
+func NewSystemErrorResult(err error) *ActionResult {
+	return &ActionResult{
+		Meta: ActionResultMeta{
+			Status:       false,
+			ErrorMessage: err.Error(),
+		},
+		Data: nil,
 	}
 }
