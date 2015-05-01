@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// create default data
 func CreateDefaultData(_ interface{}) *core.ActionResult {
 	now := time.Now()
 
@@ -34,6 +35,7 @@ func CreateDefaultData(_ interface{}) *core.ActionResult {
 	return core.NewOKActionResult(nil)
 }
 
+// create zip backup file
 func CreateZipData(_ interface{}) *core.ActionResult {
 	filename := time.Now().Format("20060102150405.zip")
 	z, err := zip.Create(filename)

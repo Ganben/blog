@@ -5,6 +5,7 @@ import (
 	"github.com/gofxh/blog/lib/entity"
 )
 
+// new max-id generator
 func NewMaxer() *entity.Maxer {
 	m := &entity.Maxer{
 		ArticleStep:  3,

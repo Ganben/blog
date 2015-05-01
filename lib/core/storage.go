@@ -12,11 +12,13 @@ import (
 	"sync"
 )
 
+// storage
 type Storage struct {
 	directory string
-	lock      sync.Mutex
+	lock      sync.Mutex // need locker
 }
 
+// new storage with data directory
 func NewStorage(dir string) *Storage {
 	s := &Storage{
 		directory: dir,
@@ -27,6 +29,7 @@ func NewStorage(dir string) *Storage {
 	return s
 }
 
+// save entity
 func (s *Storage) Save(e entity.Entity) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
@@ -45,6 +48,7 @@ func (s *Storage) Save(e entity.Entity) {
 	}
 }
 
+// read entity
 func (s *Storage) Read(e entity.Entity) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
@@ -62,11 +66,13 @@ func (s *Storage) Read(e entity.Entity) {
 	}
 }
 
+// check entity existing
 func (s *Storage) Exist(e entity.Entity) bool {
 	file := filepath.Join(s.directory, e.SKey()+".json")
 	return com.IsFile(file)
 }
 
+// remove entity
 func (s *Storage) Remove(e entity.Entity) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
@@ -77,6 +83,7 @@ func (s *Storage) Remove(e entity.Entity) {
 	}
 }
 
+// walk saving and same entity data
 func (s *Storage) Walk(e entity.Entity, fn func(interface{})) {
 	// get directory
 	file := filepath.Join(s.directory, e.SKey()+".json")

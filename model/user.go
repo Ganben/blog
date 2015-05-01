@@ -11,6 +11,7 @@ var (
 	userEmailData map[string]int64       = make(map[string]int64)
 )
 
+// load default user data
 func loadUserData() {
 	base.Storage.Walk(new(entity.User), func(v interface{}) {
 		if u, ok := v.(*entity.User); ok {

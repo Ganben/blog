@@ -9,6 +9,7 @@ import (
 	"github.com/gofxh/blog/lib/log"
 )
 
+// service struct
 type Service interface {
 	Start()
 	Stop()

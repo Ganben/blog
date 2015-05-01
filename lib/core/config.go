@@ -1,16 +1,17 @@
 package core
 
 import (
-	"cloud-server/lib/core/log"
 	"encoding/json"
 	"github.com/Unknwon/com"
+	"github.com/gofxh/blog/lib/log"
 	"io/ioutil"
 	"os"
 	"time"
 )
 
-var configFile string = "config.json"
+var configFile string = "config.json" // default json data
 
+// config data
 type Config struct {
 	InstallTime    int64  `json:"install_time"`
 	AppVersion     string `json:"app_version"`
@@ -20,6 +21,9 @@ type Config struct {
 	DataDirectory string `json:"data_directory"`
 }
 
+// new config data,
+// it loads config file if exist,
+// or its fields are filled by default values
 func NewConfig() *Config {
 	c := new(Config)
 
@@ -43,6 +47,7 @@ func NewConfig() *Config {
 	return c
 }
 
+// read config file
 func (c *Config) ReadFile() error {
 	bytes, err := ioutil.ReadFile(configFile)
 	if err != nil {
@@ -56,6 +61,7 @@ func (c *Config) ReadFile() error {
 	return nil
 }
 
+// write config file
 func (c *Config) WriteFile() error {
 	bytes, err := json.MarshalIndent(c, "", "  ")
 	if err != nil {
@@ -64,6 +70,7 @@ func (c *Config) WriteFile() error {
 	return ioutil.WriteFile(configFile, bytes, os.ModePerm)
 }
 
+// check config file existing
 func (c *Config) Exist() bool {
 	return com.IsFile(configFile)
 }

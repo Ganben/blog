@@ -6,12 +6,12 @@ import (
 )
 
 var (
-	Action *core.Action
+	Action *core.Action // action manager
 
-	Command *core.Command
-	Config  *core.Config
-	Storage *core.Storage
-	Server  *core.Server
+	Command *core.Command // command line
+	Config  *core.Config  // config data
+	Storage *core.Storage // storage engine
+	Server  *core.Server  // http server
 
-	Max *entity.Maxer
+	Max *entity.Maxer // max-id generator
 )

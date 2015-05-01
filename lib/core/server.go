@@ -8,13 +8,15 @@ import (
 	"time"
 )
 
+// http server
 type Server struct {
 	address string
 	*tango.Tango
-	ln      net.Listener
+	ln      net.Listener // use listener to try close
 	isClose bool
 }
 
+// new http server with address
 func NewServer(address string) *Server {
 	return &Server{
 		address: address,
@@ -22,6 +24,7 @@ func NewServer(address string) *Server {
 	}
 }
 
+// start http server
 func (s *Server) Start() {
 	ln, err := net.Listen("tcp", s.address)
 	if err != nil {
@@ -30,6 +33,8 @@ func (s *Server) Start() {
 	s.ln = ln
 
 	httpServer := &http.Server{Addr: s.address, Handler: s.Tango}
+
+	// use global wrapper to listen server
 	Wrap("Server|Listen", func() {
 		if err = httpServer.Serve(tcpKeepAliveListener{ln.(*net.TCPListener)}); err != nil {
 			if s.isClose {
@@ -40,6 +45,7 @@ func (s *Server) Start() {
 	})
 }
 
+// stop http server
 func (s *Server) Stop() {
 	s.isClose = true
 	if s.ln != nil {

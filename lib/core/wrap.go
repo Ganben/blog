@@ -14,14 +14,17 @@ func Wrap(funcName string, fn func()) {
 	wg.Wrap(funcName, fn)
 }
 
+// wait global group
 func WrapWait() {
 	wg.Wait()
 }
 
+// wait group
 type WaitGroup struct {
 	sync.WaitGroup
 }
 
+// wrap a function in global wait group
 func (w *WaitGroup) Wrap(funName string, fn func()) {
 	w.Add(1)
 	go func() {
