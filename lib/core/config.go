@@ -19,6 +19,10 @@ type Config struct {
 
 	HttpAddress   string `json:"http_address"`
 	DataDirectory string `json:"data_directory"`
+
+	// do not set them by config file
+	ThemeDirectory  string `json:"-"`
+	UploadDirectory string `json:"-"`
 }
 
 // new config data,
@@ -41,8 +45,12 @@ func NewConfig() *Config {
 		c.AppVersionDate = APP_VERSION
 
 		c.HttpAddress = "0.0.0.0:3030"
-		c.DataDirectory = "user/data"
+		c.DataDirectory = "data"
 	}
+
+	// set private config
+	c.ThemeDirectory = "user/theme"
+	c.UploadDirectory = "user/upload"
 
 	return c
 }

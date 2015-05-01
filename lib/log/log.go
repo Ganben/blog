@@ -16,7 +16,7 @@ const (
 
 var (
 	LEVEL_FLAGS  = [...]string{"DEBUG", " INFO", " WARN", "ERROR", "FATAL"}
-	globalLogger = NewLogger(os.Stderr, "[Blog]", true, false)
+	globalLogger = NewLogger(os.Stderr, "[B]", true, false)
 )
 
 type Logger struct {
@@ -129,4 +129,8 @@ func Error(format string, args ...interface{}) {
 
 func Fatal(format string, args ...interface{}) {
 	globalLogger.Print(FATAL, format, args...)
+}
+
+func Get() *Logger {
+	return globalLogger
 }

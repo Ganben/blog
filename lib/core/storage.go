@@ -20,6 +20,7 @@ type Storage struct {
 
 // new storage with data directory
 func NewStorage(dir string) *Storage {
+	dir = filepath.Join("user", dir)
 	s := &Storage{
 		directory: dir,
 	}
@@ -34,7 +35,7 @@ func (s *Storage) Save(e entity.Entity) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
-	bytes, err := json.Marshal(e)
+	bytes, err := json.MarshalIndent(e, "", "  ")
 	if err != nil {
 		log.Error("Storage|Save|%s|%s", e.SKey(), err.Error())
 		return

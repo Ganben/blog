@@ -38,7 +38,7 @@ var (
 
 		// start server
 		log.Info("Http server is running in %s", base.Config.HttpAddress)
-		base.Server = core.NewServer(base.Config.HttpAddress)
+		base.Server = core.NewServer(base.Config)
 		core.Start(base.Server)
 	}
 )

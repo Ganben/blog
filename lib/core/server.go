@@ -10,6 +10,7 @@ import (
 
 // http server
 type Server struct {
+	config  *Config
 	address string
 	*tango.Tango
 	ln      net.Listener // use listener to try close
@@ -17,11 +18,20 @@ type Server struct {
 }
 
 // new http server with address
-func NewServer(address string) *Server {
-	return &Server{
-		address: address,
-		Tango:   tango.Classic(),
+func NewServer(c *Config) *Server {
+	s := &Server{
+		address: c.HttpAddress,
+		config:  c,
 	}
+	// use custom tango, not classic
+	s.Tango = tango.NewWithLog(log.Get().ToTangoLogger(), []tango.Handler{
+		tango.Logging(),
+		tango.Recovery(true),
+		tango.Return(),
+		tango.Param(),
+		tango.Contexts(),
+	}...)
+	return s
 }
 
 // start http server
@@ -32,6 +42,10 @@ func (s *Server) Start() {
 	}
 	s.ln = ln
 
+	// add default router
+	s.routeDefault()
+
+	// init http server
 	httpServer := &http.Server{Addr: s.address, Handler: s.Tango}
 
 	// use global wrapper to listen server
@@ -43,6 +57,20 @@ func (s *Server) Start() {
 			log.Fatal("Server|Start|%s", err.Error())
 		}
 	})
+}
+
+// add default router
+func (s *Server) routeDefault() {
+	// add theme directory
+	s.Use(tango.Static(tango.StaticOptions{
+		RootPath: s.config.ThemeDirectory,
+		Prefix:   "theme",
+	}))
+	// add upload directory
+	s.Use(tango.Static(tango.StaticOptions{
+		RootPath: s.config.UploadDirectory,
+		Prefix:   "upload",
+	}))
 }
 
 // stop http server
