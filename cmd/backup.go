@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"github.com/codegangsta/cli"
+	"github.com/gofxh/blog/helper"
 	"github.com/gofxh/blog/lib/base"
 	"github.com/gofxh/blog/lib/core"
 	"github.com/gofxh/blog/lib/log"
-	"github.com/gofxh/blog/model"
 )
 
 var (
@@ -29,7 +29,7 @@ var (
 			log.Fatal("Blog was not installed yet !")
 		}
 
-		result := base.Action.Call(model.CreateZipData, nil)
+		result := base.Action.Call(helper.CreateZipData, nil)
 		if !result.Meta.Status {
 			log.Fatal("Backup|Fail|%s", result.Meta.ErrorMessage)
 		}

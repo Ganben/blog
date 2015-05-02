@@ -1,10 +1,11 @@
-package model
+package helper
 
 import (
 	"github.com/Unknwon/cae/zip"
 	"github.com/gofxh/blog/lib/base"
 	"github.com/gofxh/blog/lib/core"
 	"github.com/gofxh/blog/lib/entity"
+	"github.com/gofxh/blog/model"
 	"time"
 )
 
@@ -12,7 +13,7 @@ import (
 func CreateDefaultData(_ interface{}) *core.ActionResult {
 	now := time.Now()
 
-	base.Max = NewMaxer()
+	base.Max = model.NewMaxer()
 
 	// default user
 	user := &entity.User{

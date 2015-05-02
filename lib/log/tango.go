@@ -2,6 +2,7 @@ package log
 
 import "strings"
 
+// implement to tango.Logger, so receive tango's logs
 type TangoLogger struct {
 	log *Logger
 }
