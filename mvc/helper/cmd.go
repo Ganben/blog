@@ -5,7 +5,7 @@ import (
 	"github.com/gofxh/blog/lib/base"
 	"github.com/gofxh/blog/lib/core"
 	"github.com/gofxh/blog/lib/entity"
-	"github.com/gofxh/blog/model"
+	"github.com/gofxh/blog/mvc/model"
 	"time"
 )
 

@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"github.com/codegangsta/cli"
-	"github.com/gofxh/blog/helper"
 	"github.com/gofxh/blog/lib/base"
 	"github.com/gofxh/blog/lib/core"
 	"github.com/gofxh/blog/lib/log"
+	"github.com/gofxh/blog/mvc/helper"
 )
 
 var (

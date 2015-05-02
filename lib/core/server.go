@@ -3,6 +3,7 @@ package core
 import (
 	"github.com/gofxh/blog/lib/log"
 	"github.com/lunny/tango"
+	"github.com/tango-contrib/renders"
 	"net"
 	"net/http"
 	"time"
@@ -70,6 +71,11 @@ func (s *Server) routeDefault() {
 	s.Use(tango.Static(tango.StaticOptions{
 		RootPath: s.config.UploadDirectory,
 		Prefix:   "upload",
+	}))
+	// add render middleware
+	s.Use(renders.New(renders.Options{
+		Reload:    true,
+		Directory: "user/theme",
 	}))
 }
 

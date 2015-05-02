@@ -5,7 +5,9 @@ import (
 	"github.com/gofxh/blog/lib/base"
 	"github.com/gofxh/blog/lib/core"
 	"github.com/gofxh/blog/lib/log"
-	"github.com/gofxh/blog/model"
+	"github.com/gofxh/blog/mvc/controller"
+	"github.com/gofxh/blog/mvc/model"
+	"github.com/lunny/tango"
 )
 
 var (
@@ -39,6 +41,15 @@ var (
 		// start server
 		log.Info("Http server is running in %s", base.Config.HttpAddress)
 		base.Server = core.NewServer(base.Config)
+		initServerRouter()
 		core.Start(base.Server)
 	}
 )
+
+func initServerRouter() {
+	adminGroup := tango.NewGroup()
+	adminGroup.Get("/login", new(controller.AdminLoginController))
+	adminGroup.Post("/login", new(controller.AdminLoginController))
+
+	base.Server.Group("/admin", adminGroup)
+}
