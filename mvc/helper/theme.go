@@ -1,6 +1,8 @@
 package helper
 
 import (
+	"errors"
+	"github.com/gofxh/blog/lib/base"
 	"github.com/gofxh/blog/lib/core"
 	"github.com/tango-contrib/renders"
 	"path/filepath"
@@ -25,6 +27,20 @@ func initTheme(cfg *core.Config, current string) {
 		currentTheme:   current,
 		themeDirectory: cfg.ThemeDirectory,
 	}
+}
+
+// change theme caller
+func setThemeCaller(v interface{}) *core.ActionResult {
+	if name, ok := v.(string); ok {
+		theme.currentTheme = name
+		return core.NewOKActionResult(core.AData{"theme": name})
+	}
+	return core.NewSystemErrorResult(errors.New("theme name is not valid"))
+}
+
+// change theme
+func SetTheme(name string) {
+	base.Action.Call(setThemeCaller, name)
 }
 
 // theme info to view
@@ -60,12 +76,30 @@ func (t *ThemeController) Assign(name string, value interface{}) {
 	}
 }
 
-// render theme file
-func (t *ThemeController) Render(name string) {
-	// call assign to make sure that theme info are assigned
-	if len(t.data) == 0 {
-		t.Assign("", nil)
+// render theme file in caller
+func (t *ThemeController) Render(tpl string) {
+	result := base.Action.Call(t.renderTheme, tpl)
+	if !result.Meta.Status {
+		panic(result.Meta.ErrorMessage)
 	}
-	tpl := filepath.Join(theme.currentTheme, name)
-	t.Renderer.Render(tpl, t.data)
+}
+
+// render theme file
+func (t *ThemeController) renderTheme(v interface{}) *core.ActionResult {
+	if name, ok := v.(string); ok {
+		// call assign to make sure that theme info are assigned
+		if len(t.data) == 0 {
+			t.Assign("", nil)
+		}
+		tpl := filepath.Join(theme.currentTheme, name)
+		if err := t.Renderer.Render(tpl, t.data); err != nil {
+			return core.NewSystemErrorResult(err)
+		}
+		return core.NewOKActionResult(core.AData{
+			"theme":    theme.currentTheme,
+			"template": name,
+			"data":     t.data,
+		})
+	}
+	return core.NewSystemErrorResult(errors.New("template name is invalid"))
 }

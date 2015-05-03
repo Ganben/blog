@@ -493,3 +493,105 @@ a.lbl-green:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: #B7B8AD;
 }
+.container {
+  width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#header {
+  margin: 40px auto;
+  width: 100%;
+}
+#header-h1 a {
+  display: block;
+  color: #000000;
+  margin-top: 18px;
+}
+#header-img {
+  border-radius: 60px;
+}
+#article-list article {
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px dashed #dddddd;
+}
+#article-list article h2 {
+  font-size: 30px;
+}
+#article-list article h2 a {
+  display: block;
+  max-width: 600px;
+  height: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#article-list article .date {
+  font-size: 28px;
+  color: #999999;
+  width: 100px;
+  padding: 12px 0;
+}
+#article-list article .stat {
+  font-size: 20px;
+  color: #cccccc;
+  padding: 12px 0;
+}
+#article-list .more {
+  padding: 18px;
+}
+#article-list .more .btn {
+  font-size: 18px;
+  padding: 16px 24px;
+  height: auto;
+}
+#article-list .page {
+  padding-bottom: 30px;
+  color: #bbbbbb;
+  font-size: 18px;
+}
+#footer {
+  margin: 30px 0;
+  color: #bbbbbb;
+}
+#admin-bar .admin-mask {
+  width: 100%;
+  height: 100%;
+  background-color: #bbbbbb;
+  opacity: 0.4;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#admin-sign-in {
+  display: inline-block;
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  padding: 4px 12px;
+  color: #bbbbbb;
+  opacity: 0;
+  z-index: 20;
+}
+#admin-sign-in:hover {
+  background-color: #eeeeee;
+  color: #666666;
+  opacity: 1;
+}
+#admin-login-panel {
+  position: absolute;
+  top: 0;
+  margin-left: 50%;
+  left: -248px;
+  z-index: 99;
+  opacity: 0;
+}
+#login-form {
+  background-color: #fbfbfb;
+  width: 400px;
+  margin: 80px auto;
+  padding: 24px 48px;
+}
+#login-form h1 {
+  margin-bottom: 12px;
+}

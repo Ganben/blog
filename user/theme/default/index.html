@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Fxh.Go</title>
+    <link rel="stylesheet" href="{{.Theme.Path}}/css/index.css"/>
+</head>
+<body>
+<header id="header">
+    <div class="container">
+        <h1 class="text-center" id="header-h1">
+            <img id="header-img" src="http://tp1.sinaimg.cn/1865987544/180/5697090972/1" alt="fuxiaohei" width="180" height="180"/>
+            <a href="#">傅小黑</a>
+        </h1>
+    </div>
+</header>
+<div id="main">
+    <div class="container">
+        <div id="article-list">
+            <!--<div class="page text-center">Page 1 / 13</div>-->
+            <article class="clear">
+                <span class="date left">04.29</span>
+                <h2 class="left"><a href="#">什么是传说中的全栈工程师</a></h2>
+                <span class="stat right">12 / 384</span>
+            </article>
+            <article class="clear">
+                <span class="date left">04.22</span>
+                <h2 class="left"><a href="#">多说自定义CSS动感头像和多说评论显示UserAgent的那些小事</a></h2>
+                <span class="stat right">8 / 1487</span>
+            </article>
+            <article class="clear">
+                <span class="date left">04.11</span>
+                <h2 class="left"><a href="#">显示不完显示省略号，测试内容显示不完显示省略号，测试内容显示不完显示省略号，测试内容</a></h2>
+                <span class="stat right">34 / 2987</span>
+            </article>
+            <article class="clear">
+                <span class="date left">03.30</span>
+                <h2 class="left"><a href="#">Android内存与性能优化</a></h2>
+                <span class="stat right">32 / 4561</span>
+            </article>
+            <div class="more text-center">
+                <button class="btn btn-green">More Articles</button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container text-center">
+        © 1990 - .
+    </div>
+</footer>
+<div id="admin-bar">
+    <div id="admin-login-bar">
+        <a href="#" id="admin-sign-in">Sign In</a>
+        <div class="admin-mask hide"></div>
+        <div id="admin-login-panel" class="hide">
+            <form id="login-form" class="form form-vertical" action="/admin/login" method="post">
+                <h1>Login - Fxh.Go</h1>
+                <p class="field">
+                    <label for="user">Username</label>
+                    <input class="ipt" id="user" type="text" required="required" name="user"/>
+                </p>
+                <p class="field">
+                    <label for="password">Password</label>
+                    <input class="ipt" id="password" type="password" required="required" name="password"/>
+                </p>
+                <p class="field">
+                    <button class="btn btn-blue">Sign In</button>
+                    <span class="tip">(keep remember in 3 days)</span>
+                </p>
+                <p class="field text-right">
+                    <a href="/admin/forget">Forget Password ?</a>
+                </p>
+            </form>
+        </div>
+    </div>
+    <div id="admin-mgr-bar" class="hide">
+        <div class="admin-mask"></div>
+        <div id="admin-mgr-list">
+        </div>
+    </div>
+</div>
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script>
+$(function(){
+    $('#admin-sign-in').on("click",function(){
+        var $adminLoginPanel = $("#admin-login-panel");
+        if($adminLoginPanel.hasClass("hide")){
+            $(this).parent().find(".hide").removeClass("hide");
+            $adminLoginPanel.animate({opacity:1},250);
+        }
+    });
+    $('#admin-login-bar').on("click",".admin-mask",function(){
+        console.log("admin-mask-click");
+        $(this).addClass("hide");
+        $("#admin-login-panel").addClass("hide").css({opacity:0});
+    });
+})
+</script>
+</body>
+</html>
