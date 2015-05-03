@@ -250,16 +250,14 @@ button {
   margin-right: 12px;
 }
 .form .ipt {
-  padding: 8px 12px;
+  padding: 12px;
   border: 1px solid #999999;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
   outline: none;
   min-width: 180px;
 }
 .form .ipt:focus {
   border-color: #0079bc;
+  background-color: rgba(0, 121, 188, 0.002);
 }
 .form .chk {
   display: inline-block;
@@ -299,16 +297,14 @@ button {
   margin-top: 6px;
 }
 .btn {
-  min-width: 120px;
-  height: 36px;
+  min-width: 140px;
+  height: 44px;
   background-color: #cccccc;
   color: #333333;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
   outline: none;
   border: none;
   margin: 0;
+  font-size: 1.1em;
 }
 .btn:hover {
   background-color: #999999;
@@ -343,9 +339,6 @@ a.btn {
   padding: 4px 12px;
   background-color: #cccccc;
   color: #333333;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
 }
 .lbl-red {
   background-color: #e64346;
@@ -386,9 +379,6 @@ a.lbl-green:hover {
 }
 .pager .item:hover {
   background-color: #0079bc;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
 }
 .pager .item:hover a {
   color: #ffffff;
@@ -396,9 +386,6 @@ a.lbl-green:hover {
 .pager .current {
   background-color: #666666;
   color: #fbfbfb;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
 }
 .pager .current a {
   color: #fbfbfb;

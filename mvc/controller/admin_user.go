@@ -1,17 +1,17 @@
 package controller
 
 import (
+	"github.com/gofxh/blog/mvc/helper"
 	"github.com/lunny/tango"
-	"github.com/tango-contrib/renders"
 )
 
 type AdminLoginController struct {
 	tango.Ctx
-	renders.Renderer
+	helper.ThemeController
 }
 
 func (alc *AdminLoginController) Get() {
-	alc.Render("admin/login.html")
+	alc.Render("login.html")
 }
 
 func (alc *AdminLoginController) Post() {

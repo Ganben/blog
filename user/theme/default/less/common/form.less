@@ -14,11 +14,11 @@ input,textarea,select,button{
     margin-right: 12px;
   }
   .ipt {
-    padding: 8px 12px;
+    padding: 12px;
     border: 1px solid @black3;
-    .border-radius(2px);
     &:focus {
       border-color: @blue1;
+      background-color: fade(@blue1,0.2);
     }
     outline: none;
     min-width: 180px;
@@ -69,11 +69,10 @@ input,textarea,select,button{
 }
 
 .btn{
-  min-width: 120px;
-  height: 36px;
+  min-width: 140px;
+  height: 44px;
   background-color: @gray1;
   color: @black1;
-  .border-radius(2px);
   outline: none;
   border: none;
   &:hover{
@@ -81,6 +80,7 @@ input,textarea,select,button{
     cursor: pointer;
   }
   margin: 0;
+  font-size: 1.1em;
 }
 
 a.btn{

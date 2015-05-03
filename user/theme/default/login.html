@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Login - Fxh.Go</title>
+    <link rel="stylesheet" href="{{.Theme.Path}}/css/common.css"/>
+    <style>
+        #login-form{
+            width: 400px;
+            margin: 80px auto;
+        }
+        #login-form h1{
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+<form id="login-form" class="form form-vertical" action="/admin/login" method="post">
+    <h1>Login - Fxh.Go</h1>
+    <p class="field">
+        <label for="user">Username</label>
+        <input class="ipt" id="user" type="text" required="required" name="user"/>
+    </p>
+    <p class="field">
+        <label for="password">Password</label>
+        <input class="ipt" id="password" type="password" required="required" name="password"/>
+    </p>
+    <p class="field">
+        <button class="btn btn-blue">Sign In</button>
+        <span class="tip">(keep remember in 3 days)</span>
+    </p>
+    <p class="field text-right">
+        <a href="/admin/forget">Forget Password ?</a>
+    </p>
+</form>
+</body>
+</html>
