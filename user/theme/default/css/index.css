@@ -557,13 +557,14 @@ a.lbl-green:hover {
 #admin-bar .admin-mask {
   width: 100%;
   height: 100%;
-  background-color: #bbbbbb;
-  opacity: 0.4;
+  background-color: #999999;
+  opacity: 0;
   position: absolute;
   top: 0;
   left: 0;
 }
-#admin-sign-in {
+#admin-sign-in,
+#admin-sign-out {
   display: inline-block;
   position: absolute;
   top: 18px;
@@ -573,10 +574,19 @@ a.lbl-green:hover {
   opacity: 0;
   z-index: 20;
 }
-#admin-sign-in:hover {
+#admin-sign-in:hover,
+#admin-sign-out:hover {
   background-color: #eeeeee;
   color: #666666;
   opacity: 1;
+}
+#admin-sign-out {
+  background-color: #e64346 !important;
+  color: #fbfbfb !important;
+  opacity: 0.5 !important;
+}
+#admin-sign-out:hover {
+  opacity: 1 !important;
 }
 #admin-login-panel {
   position: absolute;
@@ -594,4 +604,52 @@ a.lbl-green:hover {
 }
 #login-form h1 {
   margin-bottom: 12px;
+}
+#admin-mgr-btn {
+  display: inline-block;
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  width: 38px;
+  padding: 11px 0;
+  height: 16px;
+  border-radius: 19px;
+  opacity: 0.5;
+}
+#admin-mgr-btn:hover {
+  background-color: #dddddd;
+  opacity: 1;
+}
+#admin-mgr-btn span {
+  display: block;
+  height: 3px;
+  background-color: #000000;
+  width: 18px;
+  margin-left: 10px;
+}
+#admin-mgr-btn span.mid {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+#admin-mgr-panel {
+  position: fixed;
+  top: 0;
+  left: -301px;
+  height: 100%;
+  width: 300px;
+  background-color: #fbfbfb;
+  border-right: 1px solid #bbbbbb;
+}
+#admin-mgr-info {
+  padding-left: 24px;
+  margin-top: 18px;
+  border-bottom: 1px solid #dddddd;
+}
+#admin-mgr-list {
+  margin-top: 18px;
+}
+#admin-mgr-list li {
+  height: 48px;
+  line-height: 48px;
+  padding: 0 24px;
 }

@@ -50,7 +50,7 @@
     </div>
 </footer>
 <div id="admin-bar">
-    <div id="admin-login-bar">
+    <div id="admin-login-bar" class="hide">
         <a href="#" id="admin-sign-in">Sign In</a>
         <div class="admin-mask hide"></div>
         <div id="admin-login-panel" class="hide">
@@ -74,9 +74,23 @@
             </form>
         </div>
     </div>
-    <div id="admin-mgr-bar" class="hide">
-        <div class="admin-mask"></div>
-        <div id="admin-mgr-list">
+    <div id="admin-logged-bar">
+        <a href="#" id="admin-sign-out">Sign Out</a>
+    </div>
+    <div id="admin-mgr-bar">
+        <div class="admin-mask hide"></div>
+        <a id="admin-mgr-btn" href="#">
+            <span></span><span class="mid"></span><span></span>
+        </a>
+        <div id="admin-mgr-panel">
+            <div id="admin-mgr-info">
+                <h3>Hi, Fuxiaohei !</h3>
+            </div>
+            <ul id="admin-mgr-list">
+                <li><a href="#">Articles</a></li>
+                <li><a href="#">Comments</a></li>
+                <li><a href="#">Options</a></li>
+            </ul>
         </div>
     </div>
 </div>
@@ -86,15 +100,26 @@ $(function(){
     $('#admin-sign-in').on("click",function(){
         var $adminLoginPanel = $("#admin-login-panel");
         if($adminLoginPanel.hasClass("hide")){
-            $(this).parent().find(".hide").removeClass("hide");
+            $(this).parent().find(".hide").removeClass("hide").animate({opacity:0.6});
             $adminLoginPanel.animate({opacity:1},250);
         }
     });
     $('#admin-login-bar').on("click",".admin-mask",function(){
-        console.log("admin-mask-click");
-        $(this).addClass("hide");
+        $(this).animate({opacity:0},200,function(){
+            $(this).addClass("hide")
+        });
         $("#admin-login-panel").addClass("hide").css({opacity:0});
     });
+    $('#admin-mgr-btn').on("click",function(){
+        $(this).parent().find(".hide").removeClass("hide").animate({opacity:0.6});
+        $('#admin-mgr-panel').animate({left:0},200);
+    });
+    $('#admin-mgr-bar').on("click",".admin-mask",function(){
+        $(this).animate({opacity:0},200,function(){
+            $(this).addClass("hide")
+        });
+        $('#admin-mgr-panel').animate({left:-301},200);
+    })
 })
 </script>
 </body>
