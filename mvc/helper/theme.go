@@ -68,7 +68,7 @@ func (t *ThemeController) Assign(name string, value interface{}) {
 		// assign theme data for default
 		t.data["Theme"] = themeInfo{
 			Current: theme.currentTheme,
-			Path:    filepath.Join("/theme", theme.currentTheme),
+			Path:    "/theme/" + theme.currentTheme,
 		}
 	}
 	if name != "" {
@@ -78,14 +78,14 @@ func (t *ThemeController) Assign(name string, value interface{}) {
 
 // render theme file in caller
 func (t *ThemeController) Render(tpl string) {
-	result := base.Action.Call(t.renderTheme, tpl)
+	result := base.Action.Call(t.RenderTheme, tpl)
 	if !result.Meta.Status {
 		panic(result.Meta.ErrorMessage)
 	}
 }
 
 // render theme file
-func (t *ThemeController) renderTheme(v interface{}) *core.ActionResult {
+func (t *ThemeController) RenderTheme(v interface{}) *core.ActionResult {
 	if name, ok := v.(string); ok {
 		// call assign to make sure that theme info are assigned
 		if len(t.data) == 0 {
