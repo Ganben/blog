@@ -35,7 +35,7 @@ func setThemeCaller(v interface{}) *core.ActionResult {
 		theme.currentTheme = name
 		return core.NewOKActionResult(core.AData{"theme": name})
 	}
-	return core.NewSystemErrorResult(errors.New("theme name is not valid"))
+	return core.NewErrorResult(errors.New("theme name is not valid"))
 }
 
 // change theme
@@ -53,6 +53,7 @@ type themeInfo struct {
 type IThemeController interface {
 	Assign(key string, value interface{})
 	Render(tpl string)
+	RenderAction(interface{}) *core.ActionResult
 }
 
 // theme controller, base on tango's render
@@ -78,14 +79,14 @@ func (t *ThemeController) Assign(name string, value interface{}) {
 
 // render theme file in caller
 func (t *ThemeController) Render(tpl string) {
-	result := base.Action.Call(t.RenderTheme, tpl)
+	result := base.Action.Call(t.RenderAction, tpl)
 	if !result.Meta.Status {
 		panic(result.Meta.ErrorMessage)
 	}
 }
 
 // render theme file
-func (t *ThemeController) RenderTheme(v interface{}) *core.ActionResult {
+func (t *ThemeController) RenderAction(v interface{}) *core.ActionResult {
 	if name, ok := v.(string); ok {
 		// call assign to make sure that theme info are assigned
 		if len(t.data) == 0 {
@@ -93,7 +94,7 @@ func (t *ThemeController) RenderTheme(v interface{}) *core.ActionResult {
 		}
 		tpl := filepath.Join(theme.currentTheme, name)
 		if err := t.Renderer.Render(tpl, t.data); err != nil {
-			return core.NewSystemErrorResult(err)
+			return core.NewErrorResult(err)
 		}
 		return core.NewOKActionResult(core.AData{
 			"theme":    theme.currentTheme,
@@ -101,5 +102,5 @@ func (t *ThemeController) RenderTheme(v interface{}) *core.ActionResult {
 			"data":     t.data,
 		})
 	}
-	return core.NewSystemErrorResult(errors.New("template name is invalid"))
+	return core.NewErrorResult(errors.New("template name is invalid"))
 }

@@ -95,7 +95,7 @@ func NewOKActionResult(data AData) *ActionResult {
 }
 
 // new error result with err data
-func NewSystemErrorResult(err error) *ActionResult {
+func NewErrorResult(err error) *ActionResult {
 	return &ActionResult{
 		Meta: ActionResultMeta{
 			Status:       false,

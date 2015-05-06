@@ -41,7 +41,7 @@ func CreateZipData(_ interface{}) *core.ActionResult {
 	filename := time.Now().Format("20060102150405.zip")
 	z, err := zip.Create(filename)
 	if err != nil {
-		return core.NewSystemErrorResult(err)
+		return core.NewErrorResult(err)
 	}
 
 	zip.Verbose = false
@@ -50,7 +50,7 @@ func CreateZipData(_ interface{}) *core.ActionResult {
 	z.AddDir(base.Config.DataDirectory, base.Config.DataDirectory)
 
 	if err = z.Flush(); err != nil {
-		return core.NewSystemErrorResult(err)
+		return core.NewErrorResult(err)
 	}
 
 	z.Close()

@@ -43,6 +43,15 @@ func (s *User) SKey() string {
 	return fmt.Sprintf("user/user_%d", s.Id)
 }
 
+// compare user's encoded password and raw password
+func CompareUserPassword(u *User, password string) bool {
+	s := sha256.New()
+	s.Write([]byte(password))
+	s.Write([]byte(u.Salt))
+	return u.Password == hex.EncodeToString(s.Sum(nil))
+}
+
+// generate encoded password and salt
 func GenerateUserPassword(password string) (string, string) {
 	// md5 to create salt
 	t := strconv.FormatInt(time.Now().UnixNano(), 10)

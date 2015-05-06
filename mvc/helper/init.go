@@ -6,6 +6,11 @@ import (
 )
 
 func Init(_ interface{}) *core.ActionResult {
+	// init theme manager
 	initTheme(base.Config, "")
+
+	// add user auth handler
+	base.Server.Use(UseAuth())
+
 	return core.NewOKActionResult(nil)
 }

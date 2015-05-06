@@ -36,15 +36,15 @@ var (
 		base.Storage = core.NewStorage(base.Config.DataDirectory)
 		base.Action.Call(model.Init, nil)
 
-		// init helper
-		base.Action.Call(helper.Init, nil)
-
 		// start cron
 
 		// start server
 		log.Info("Http server is running in %s", base.Config.HttpAddress)
 		base.Server = core.NewServer(base.Config)
 		base.Action.Call(controller.Init, nil)
+
+		// init helper
+		base.Action.Call(helper.Init, nil)
 
 		core.Start(base.Server)
 	}

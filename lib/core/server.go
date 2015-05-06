@@ -3,6 +3,7 @@ package core
 import (
 	"github.com/gofxh/blog/lib/log"
 	"github.com/lunny/tango"
+	"github.com/tango-contrib/binding"
 	"github.com/tango-contrib/renders"
 	"net"
 	"net/http"
@@ -77,6 +78,8 @@ func (s *Server) routeDefault() {
 		Reload:    true,
 		Directory: "user/theme",
 	}))
+	// add binding middleware
+	s.Use(binding.Bind())
 }
 
 // stop http server
