@@ -6,6 +6,6 @@ func Init(_ interface{}) *core.ActionResult {
 	loadUserData()
 
 	return core.NewOKActionResult(core.AData{
-		"users": userData,
+		"users": UserData,
 	})
 }

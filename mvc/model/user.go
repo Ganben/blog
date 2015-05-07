@@ -48,10 +48,7 @@ func GetValidToken(value string) *entity.Token {
 	token := GetToken(value)
 	if token != nil {
 		if token.ExpireTime <= time.Now().Unix() {
-			base.Storage.Remove(token)
-			m.Lock()
-			delete(TokenData, token.Value)
-			m.Unlock()
+			RemoteToken(token)
 			return nil
 		}
 	}
@@ -76,7 +73,7 @@ func GetUserByName(name string) *entity.User {
 }
 
 // create new token
-func CreateToken(uid int, ip, agent string, expire int64) *entity.Token {
+func CreateToken(uid int64, ip, agent string, expire int64) *entity.Token {
 	token := &entity.Token{
 		Value:      entity.GenerateTokenValue(uid, ip, agent),
 		UserId:     uid,
@@ -95,4 +92,12 @@ func ExtendToken(t *entity.Token) {
 	t.ExpireTime = time.Now().Unix() + (t.ExpireTime - t.CreateTime)
 	base.Storage.Save(t)
 	TokenData[t.Value] = t
+}
+
+// remove token
+func RemoteToken(t *entity.Token) {
+	base.Storage.Remove(t)
+	m.Lock()
+	delete(TokenData, t.Value)
+	m.Unlock()
 }
