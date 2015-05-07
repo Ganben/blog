@@ -6,6 +6,7 @@ import (
 	"github.com/gofxh/blog/lib/core"
 	"github.com/gofxh/blog/lib/log"
 	"github.com/gofxh/blog/mvc/controller"
+	"github.com/gofxh/blog/mvc/crond"
 	"github.com/gofxh/blog/mvc/helper"
 	"github.com/gofxh/blog/mvc/model"
 )
@@ -37,6 +38,8 @@ var (
 		base.Action.Call(model.Init, nil)
 
 		// start cron
+		base.Cron = core.NewCron()
+		base.Action.Call(crond.Init, nil)
 
 		// start server
 		log.Info("Http server is running in %s", base.Config.HttpAddress)

@@ -3,22 +3,25 @@ package model
 import (
 	"github.com/gofxh/blog/lib/base"
 	"github.com/gofxh/blog/lib/entity"
+	"sync"
 	"time"
 )
 
 var (
-	userData      map[int64]*entity.User = make(map[int64]*entity.User)
-	userNameData  map[string]int64       = make(map[string]int64)
-	userEmailData map[string]int64       = make(map[string]int64)
+	UserData  map[int64]*entity.User   = make(map[int64]*entity.User)
+	TokenData map[string]*entity.Token = make(map[string]*entity.Token)
 
-	tokenData map[string]*entity.Token = make(map[string]*entity.Token)
+	userNameData  map[string]int64 = make(map[string]int64)
+	userEmailData map[string]int64 = make(map[string]int64)
+
+	m sync.Mutex
 )
 
 // load default user data
 func loadUserData() {
 	base.Storage.Walk(new(entity.User), func(v interface{}) {
 		if u, ok := v.(*entity.User); ok {
-			userData[u.Id] = u
+			UserData[u.Id] = u
 			userNameData[u.Name] = u.Id
 			userEmailData[u.Email] = u.Id
 		}
@@ -30,14 +33,14 @@ func loadUserData() {
 				base.Storage.Remove(t)
 				return
 			}
-			tokenData[t.Value] = t
+			TokenData[t.Value] = t
 		}
 	})
 }
 
 // get token by value, ignore expiration
 func GetToken(value string) *entity.Token {
-	return tokenData[value]
+	return TokenData[value]
 }
 
 // get token by value with expiration check
@@ -46,6 +49,9 @@ func GetValidToken(value string) *entity.Token {
 	if token != nil {
 		if token.ExpireTime <= time.Now().Unix() {
 			base.Storage.Remove(token)
+			m.Lock()
+			delete(TokenData, token.Value)
+			m.Unlock()
 			return nil
 		}
 	}
@@ -58,13 +64,13 @@ func GetUserByTokenValue(value string) (*entity.Token, *entity.User) {
 	if token == nil {
 		return nil, nil
 	}
-	return token, userData[token.UserId]
+	return token, UserData[token.UserId]
 }
 
 // get user by name
 func GetUserByName(name string) *entity.User {
 	if id := userNameData[name]; id > 0 {
-		return userData[id]
+		return UserData[id]
 	}
 	return nil
 }
@@ -80,7 +86,7 @@ func CreateToken(uid int, ip, agent string, expire int64) *entity.Token {
 		UserAgent:  agent,
 	}
 	base.Storage.Save(token)
-	tokenData[token.Value] = token
+	TokenData[token.Value] = token
 	return token
 }
 
@@ -88,5 +94,5 @@ func CreateToken(uid int, ip, agent string, expire int64) *entity.Token {
 func ExtendToken(t *entity.Token) {
 	t.ExpireTime = time.Now().Unix() + (t.ExpireTime - t.CreateTime)
 	base.Storage.Save(t)
-	tokenData[t.Value] = t
+	TokenData[t.Value] = t
 }

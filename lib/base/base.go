@@ -12,6 +12,7 @@ var (
 	Config  *core.Config  // config data
 	Storage *core.Storage // storage engine
 	Server  *core.Server  // http server
+	Cron    *core.Cron    // cron task
 
 	Max *entity.Maxer // max-id generator
 )
