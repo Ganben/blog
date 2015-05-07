@@ -26,3 +26,21 @@
 })(window.jQuery);
 
 // login logic
+(function ($) {
+    $('#login-form').on("submit", function () {
+        var data = $(this).serialize();
+        $.post("/api/user/login", data, function (result) {
+            if (result.meta.status) {
+                var token = result.data.token;
+                $.cookie("token", token.token, {
+                    path: "/",
+                    expire: 7
+                });
+                window.location.reload();
+            } else {
+
+            }
+        });
+        return false;
+    });
+})(window.jQuery);
