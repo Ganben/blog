@@ -49,35 +49,11 @@
         © 1990 - .
     </div>
 </footer>
-<div id="admin-bar">
-    <div id="admin-login-bar" class="hide">
-        <a href="#" id="admin-sign-in">Sign In</a>
-        <div class="admin-mask hide"></div>
-        <div id="admin-login-panel" class="hide">
-            <form id="login-form" class="form form-vertical" action="/admin/login" method="post">
-                <h1>Login - Fxh.Go</h1>
-                <p class="field">
-                    <label for="user">Username</label>
-                    <input class="ipt" id="user" type="text" required="required" name="user"/>
-                </p>
-                <p class="field">
-                    <label for="password">Password</label>
-                    <input class="ipt" id="password" type="password" required="required" name="password"/>
-                </p>
-                <p class="field">
-                    <button class="btn btn-blue">Sign In</button>
-                    <span class="tip">(keep remember in 3 days)</span>
-                </p>
-                <p class="field text-right">
-                    <a href="/admin/forget">Forget Password ?</a>
-                </p>
-            </form>
-        </div>
-    </div>
-    <div id="admin-logged-bar">
+<div id="admin-bar">{{if .IsSigned}}
+    <div id="admin-logged-bar" class="hide">
         <a href="#" id="admin-sign-out">Sign Out</a>
     </div>
-    <div id="admin-mgr-bar">
+    <div id="admin-mgr-bar" class="hide">
         <div class="admin-mask hide"></div>
         <a id="admin-mgr-btn" href="#">
             <span></span><span class="mid"></span><span></span>
@@ -92,35 +68,34 @@
                 <li><a href="#">Options</a></li>
             </ul>
         </div>
-    </div>
+    </div>{{else}}
+    <div id="admin-login-bar">
+        <a href="#" id="admin-sign-in">Sign In</a>
+        <div class="admin-mask hide"></div>
+        <div id="admin-login-panel" class="hide">
+            <form id="login-form" class="form form-vertical" method="post">
+                <h1>Login - Fxh.Go</h1>
+                <p class="field">
+                    <label for="user">Username</label>
+                    <input class="ipt" id="user" type="text" required="required" name="user"/>
+                </p>
+                <p class="field">
+                    <label for="password">Password</label>
+                    <input class="ipt" id="password" type="password" required="required" name="password"/>
+                </p>
+                <p class="field">
+                    <button class="btn btn-blue">Sign In</button>
+                    <span class="tip">(keep remember in a week)</span>
+                </p>
+                <p class="field text-right">
+                    <a href="/admin/forget">Forget Password ?</a>
+                </p>
+            </form>
+        </div>
+    </div>{{end}}
 </div>
-<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
-<script>
-$(function(){
-    $('#admin-sign-in').on("click",function(){
-        var $adminLoginPanel = $("#admin-login-panel");
-        if($adminLoginPanel.hasClass("hide")){
-            $(this).parent().find(".hide").removeClass("hide").animate({opacity:0.6});
-            $adminLoginPanel.animate({opacity:1},250);
-        }
-    });
-    $('#admin-login-bar').on("click",".admin-mask",function(){
-        $(this).animate({opacity:0},200,function(){
-            $(this).addClass("hide")
-        });
-        $("#admin-login-panel").addClass("hide").css({opacity:0});
-    });
-    $('#admin-mgr-btn').on("click",function(){
-        $(this).parent().find(".hide").removeClass("hide").animate({opacity:0.6});
-        $('#admin-mgr-panel').animate({left:0},200);
-    });
-    $('#admin-mgr-bar').on("click",".admin-mask",function(){
-        $(this).animate({opacity:0},200,function(){
-            $(this).addClass("hide")
-        });
-        $('#admin-mgr-panel').animate({left:-301},200);
-    })
-})
-</script>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/Cookies.js/0.4.0/cookies.min.js"></script>
+<script src="{{.Theme.Path}}/js/index.js"></script>
 </body>
 </html>

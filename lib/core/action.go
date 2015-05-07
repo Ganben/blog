@@ -71,8 +71,8 @@ type ActionAfterFunc func(*ActionResult)
 // with status and error message
 type ActionResultMeta struct {
 	Status       bool   `json:"status"`
-	ErrorCode    int    `json:"error_code,emitempty"`
-	ErrorMessage string `json:"error_message,emitempty"`
+	ErrorCode    int    `json:"error_code,omitempty"`
+	ErrorMessage string `json:"error_message,omitempty"`
 }
 
 // action result data
