@@ -52,7 +52,7 @@ func GetValidToken(value string) *entity.Token {
 			return nil
 		}
 	}
-	return nil
+	return token
 }
 
 // get user by token value with expiration check

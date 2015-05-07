@@ -17,6 +17,11 @@ type AuthController struct {
 	AuthUser *entity.User
 }
 
+// implement user auth controller
+func (ac *AuthController) SetAuthUser(u *entity.User) {
+	ac.AuthUser = u
+}
+
 // auth handler in tango middleware
 func UseAuth() tango.HandlerFunc {
 	return func(ctx *tango.Context) {

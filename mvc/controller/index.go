@@ -1,6 +1,8 @@
 package controller
 
-import "github.com/gofxh/blog/mvc/helper"
+import (
+	"github.com/gofxh/blog/mvc/helper"
+)
 
 type IndexController struct {
 	helper.AuthController

@@ -26,14 +26,3 @@
 })(window.jQuery);
 
 // login logic
-(function ($) {
-    $('#login-form').on("submit", function () {
-        var data = $(this).serialize();
-        $.post("/api/user/login", data, function (result) {
-            if(result.meta.status){
-                Cookies.set("token",result.data.token.value);
-            }
-        });
-        return false;
-    })
-})(window.jQuery);

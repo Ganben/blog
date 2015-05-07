@@ -50,10 +50,10 @@
     </div>
 </footer>
 <div id="admin-bar">{{if .IsSigned}}
-    <div id="admin-logged-bar" class="hide">
+    <div id="admin-logged-bar">
         <a href="#" id="admin-sign-out">Sign Out</a>
     </div>
-    <div id="admin-mgr-bar" class="hide">
+    <div id="admin-mgr-bar">
         <div class="admin-mask hide"></div>
         <a id="admin-mgr-btn" href="#">
             <span></span><span class="mid"></span><span></span>
@@ -73,7 +73,7 @@
         <a href="#" id="admin-sign-in">Sign In</a>
         <div class="admin-mask hide"></div>
         <div id="admin-login-panel" class="hide">
-            <form id="login-form" class="form form-vertical" method="post">
+            <form id="login-form" class="form form-vertical" action="/api/user/login?redirect=/" method="post">
                 <h1>Login - Fxh.Go</h1>
                 <p class="field">
                     <label for="user">Username</label>
@@ -94,8 +94,8 @@
         </div>
     </div>{{end}}
 </div>
-<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="http://apps.bdimg.com/libs/Cookies.js/0.4.0/cookies.min.js"></script>
+<script src="{{.Theme.Path}}/js/jquery-2.1.4.min.js"></script>
+<script src="{{.Theme.Path}}/js/jquery.cookie.js"></script>
 <script src="{{.Theme.Path}}/js/index.js"></script>
 </body>
 </html>
