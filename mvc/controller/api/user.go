@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"github.com/gofxh/blog/lib/base"
 	"github.com/gofxh/blog/lib/core"
+	"github.com/gofxh/blog/lib/entity"
 	"github.com/gofxh/blog/mvc/action"
 	"github.com/lunny/tango"
 	"github.com/tango-contrib/binding"
+	"net/http"
+	"time"
 )
 
 // login controller
@@ -27,5 +30,13 @@ func (l *LoginController) Post() {
 	form.UserAgent = l.Req().UserAgent()
 	form.Expire = 3600 * 24 * 7
 	result := base.Action.Call(action.Login, &form)
+	if result.Meta.Status {
+		tk := result.Data["token"].(*entity.Token)
+		l.Cookies().Set(&http.Cookie{
+			Name:   "token",
+			Value:  tk.Value,
+			MaxAge: int(tk.ExpireTime - time.Now().Unix()),
+		})
+	}
 	l.ServeJson(result)
 }
