@@ -53,12 +53,12 @@ func GetValidToken(value string) *entity.Token {
 }
 
 // get user by token value with expiration check
-func GetUserByTokenValue(value string) *entity.User {
+func GetUserByTokenValue(value string) (*entity.Token, *entity.User) {
 	token := GetValidToken(value)
 	if token == nil {
-		return nil
+		return nil, nil
 	}
-	return userData[token.UserId]
+	return token, userData[token.UserId]
 }
 
 // get user by name
@@ -67,4 +67,26 @@ func GetUserByName(name string) *entity.User {
 		return userData[id]
 	}
 	return nil
+}
+
+// create new token
+func CreateToken(uid int, ip, agent string, expire int64) *entity.Token {
+	token := &entity.Token{
+		Value:      entity.GenerateTokenValue(uid, ip, agent),
+		UserId:     uid,
+		CreateTime: time.Now().Unix(),
+		ExpireTime: time.Now().Unix() + expire,
+		UserIp:     ip,
+		UserAgent:  agent,
+	}
+	base.Storage.Save(token)
+	tokenData[token.Value] = token
+	return token
+}
+
+// extend token's expire time
+func ExtendToken(t *entity.Token) {
+	t.ExpireTime = time.Now().Unix() + (t.ExpireTime - t.CreateTime)
+	base.Storage.Save(t)
+	tokenData[t.Value] = t
 }

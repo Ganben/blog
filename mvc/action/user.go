@@ -18,8 +18,10 @@ var (
 
 // login form
 type LoginForm struct {
-	User     string
-	Password string
+	User          string
+	Password      string
+	Ip, UserAgent string
+	Expire        int64
 }
 
 // login action, with login form
@@ -35,10 +37,10 @@ func Login(v interface{}) *core.ActionResult {
 	if !entity.CompareUserPassword(user, f.Password) {
 		return core.NewErrorResult(LOGIN_WRONG_PWD_ERROR)
 	}
-	// todo : create token
+	token := model.CreateToken(user.Id, f.Ip, f.UserAgent, f.Expire)
 	return core.NewOKActionResult(core.AData{
 		"user":  user,
-		"token": new(entity.Token),
+		"token": token,
 	})
 }
 
@@ -48,7 +50,9 @@ func Auth(v interface{}) *core.ActionResult {
 	if !ok {
 		return core.NewErrorResult(AUTH_BAD_DATA_ERROR)
 	}
-	user := model.GetUserByTokenValue(str)
+	token, user := model.GetUserByTokenValue(str)
+	// extend this token
+	model.ExtendToken(token)
 	if user == nil {
 		return core.NewErrorResult(AUTH_NO_USER_ERROR)
 	}

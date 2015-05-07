@@ -22,6 +22,9 @@ func (l *LoginController) Post() {
 		l.ServeJson(core.NewErrorResult(errors.New(e[0].Error())))
 		return
 	}
+	form.Ip = l.Req().RemoteAddr
+	form.UserAgent = l.Req().UserAgent()
+	form.Expire = 3600 * 24 * 7
 	result := base.Action.Call(action.Login, &form)
 	l.ServeJson(result)
 }

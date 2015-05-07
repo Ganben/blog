@@ -1,6 +1,11 @@
 package entity
 
-import "fmt"
+import (
+	"crypto/sha1"
+	"encoding/hex"
+	"fmt"
+	"time"
+)
 
 type Token struct {
 	Value  string `json:"token"`
@@ -15,4 +20,12 @@ type Token struct {
 
 func (t *Token) SKey() string {
 	return fmt.Sprintf("token/%s.json", t.Value)
+}
+
+// generate token value
+func GenerateTokenValue(uid int64, ip, agent string) string {
+	content := fmt.Sprintf("%d_%s_%s_%d", uid, ip, agent, time.Now().Unix())
+	s := sha1.New()
+	s.Write([]byte(content))
+	return hex.EncodeToString(s.Sum(nil))
 }
