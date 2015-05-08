@@ -44,3 +44,19 @@
         return false;
     });
 })(window.jQuery);
+
+// logout logic
+(function ($) {
+    $('#admin-sign-out').on("click", function () {
+        var token = $.cookie("token");
+        $.post("/api/user/logout", "token=" + token, function (result) {
+            if (result.meta.status) {
+                $.removeCookie("token");
+                window.location.reload();
+                return;
+            }
+            $(this).show();
+        });
+        $(this).hide();
+    });
+})(window.jQuery);

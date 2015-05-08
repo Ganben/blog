@@ -53,6 +53,9 @@ func Auth(v interface{}) *core.ActionResult {
 		return core.NewErrorResult(AUTH_BAD_DATA_ERROR)
 	}
 	token, user := model.GetUserByTokenValue(str)
+	if token == nil || user == nil {
+		return core.NewErrorResult(AUTH_NO_USER_ERROR)
+	}
 	// extend this token
 	model.ExtendToken(token)
 	if user == nil {
