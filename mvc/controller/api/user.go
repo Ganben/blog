@@ -30,3 +30,21 @@ func (l *LoginController) Post() {
 	result := base.Action.Call(action.Login, &form)
 	l.ServeJson(result)
 }
+
+// logout controller
+type LogoutController struct {
+	tango.Ctx
+	xsrf.NoCheck
+	binding.Binder
+}
+
+// logout controller post method
+func (l *LogoutController) Post() {
+	var form action.LogoutForm
+	if e := l.Bind(&form); e.Len() > 0 {
+		l.ServeJson(core.NewErrorResult(errors.New(e[0].Error())))
+		return
+	}
+	result := base.Action.Call(action.Logout, &form)
+	l.ServeJson(result)
+}

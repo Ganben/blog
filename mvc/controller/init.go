@@ -16,6 +16,7 @@ func Init(_ interface{}) *core.ActionResult {
 
 	apiGroup := tango.NewGroup()
 	apiGroup.Post("/user/login", new(api.LoginController))
+	apiGroup.Post("/user/logout", new(api.LogoutController))
 	base.Server.Group("/api", apiGroup)
 
 	base.Server.Get("/", new(IndexController))

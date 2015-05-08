@@ -11,9 +11,6 @@ var (
 	LOGIN_BAD_DATA_ERROR  = errors.New("bad data")
 	LOGIN_NO_USER_ERROR   = errors.New("no user")
 	LOGIN_WRONG_PWD_ERROR = errors.New("wrong password")
-
-	AUTH_BAD_DATA_ERROR = errors.New("bad data")
-	AUTH_NO_USER_ERROR  = errors.New("no user")
 )
 
 // login form
@@ -44,6 +41,11 @@ func Login(v interface{}) *core.ActionResult {
 	})
 }
 
+var (
+	AUTH_BAD_DATA_ERROR = errors.New("bad data")
+	AUTH_NO_USER_ERROR  = errors.New("no user")
+)
+
 // auth action , with token value
 func Auth(v interface{}) *core.ActionResult {
 	str, ok := v.(string)
@@ -59,4 +61,23 @@ func Auth(v interface{}) *core.ActionResult {
 	return core.NewOKActionResult(core.AData{
 		"user": user,
 	})
+}
+
+var (
+	LOGOUT_BAD_DATA_ERROR = errors.New("bad data")
+)
+
+// logout form
+type LogoutForm struct {
+	Token string
+}
+
+// logout action, with logout form
+func Logout(v interface{}) *core.ActionResult {
+	form, ok := v.(*LogoutForm)
+	if !ok {
+		return core.NewErrorResult(LOGOUT_BAD_DATA_ERROR)
+	}
+	model.RemoteToken(&entity.Token{Value: form.Token})
+	return core.NewOKActionResult(nil)
 }
