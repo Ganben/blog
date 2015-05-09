@@ -649,7 +649,12 @@ a.lbl-green:hover {
   margin-top: 18px;
 }
 #admin-mgr-list li {
-  height: 48px;
-  line-height: 48px;
+  height: 60px;
+  line-height: 60px;
   padding: 0 24px;
+}
+#admin-mgr-list li .right {
+  margin-top: 16px;
+  font-size: 0.9em;
+  padding: .1em .4em;
 }

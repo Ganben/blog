@@ -30,6 +30,7 @@
     $('#login-form').on("submit", function () {
         var data = $(this).serialize();
         $.post("/api/user/login", data, function (result) {
+            console.log(result);
             if (result.meta.status) {
                 var token = result.data.token;
                 $.cookie("token", token.token, {
