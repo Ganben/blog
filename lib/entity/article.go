@@ -1,5 +1,7 @@
 package entity
 
+import "fmt"
+
 const (
 	ARTICLE_COMMENT_STATUS_ENABLE  int8 = 1
 	ARTICLE_COMMENT_STATUS_EXPIRE  int8 = 3
@@ -50,4 +52,8 @@ type Article struct {
 
 	// view count
 	ViewCount int `json:"views"`
+}
+
+func (a *Article) SKey() string {
+	return fmt.Sprintf("article/article_%d", a.Id)
 }
