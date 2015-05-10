@@ -33,18 +33,20 @@ var (
 			log.Fatal("Blog was not installed yet !")
 		}
 
-		// load data
+		// init base vars
 		base.Storage = core.NewStorage(base.Config.DataDirectory)
+		base.Cron = core.NewCron()
+		base.Server = core.NewServer(base.Config)
+
+		// load data
 		base.Action.Call(model.Init, nil)
 
 		// start cron
-		base.Cron = core.NewCron()
 		base.Action.Call(crond.Init, nil)
 
 		// start server
-		log.Info("Http server is running in %s", base.Config.HttpAddress)
-		base.Server = core.NewServer(base.Config)
 		base.Action.Call(controller.Init, nil)
+		log.Info("Http server is running in %s", base.Config.HttpAddress)
 
 		// init helper
 		base.Action.Call(helper.Init, nil)

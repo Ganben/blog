@@ -7,6 +7,9 @@
     <style>
         #admin-sign-out{display: none}
     </style>
+    <script src="{{.Theme.Path}}/js/jquery-2.1.4.min.js"></script>
+    <script src="{{.Theme.Path}}/js/jquery.cookie.js"></script>
+    <script src="{{.Theme.Path}}/js/index.js"></script>
 </head>
 <body>
 <div id="editor-wrapper">
@@ -15,26 +18,12 @@
             <label for="title">Title</label>
             <input class="ipt" id="title" name="title" type="text" placeholder="untitled" required="required"/>
         </p>
-        <div class="field clear" id="editor-rich">
-            <div class="left">
-                <p class="text-left"><span class="lbl lbl-gray">MARKDOWN</span></p>
-                <textarea class="ipt" name="content" id="editor-content">article content</textarea>
-            </div>
-            <div class="left">
-                <p class="text-right">
-                    <span class="lbl lbl-gray">PREVIEW</span>
-                </p>
-                <div id="editor-preview" class="ipt">preview content</div>
-            </div>
-        </div>
+        {{template "default/editor.html" .}}
         <div class="field clear">
             <button class="btn btn-blue right">Save</button>
         </div>
     </form>
 </div>
 {{template "default/admin.html" .}}
-<script src="{{.Theme.Path}}/js/jquery-2.1.4.min.js"></script>
-<script src="{{.Theme.Path}}/js/jquery.cookie.js"></script>
-<script src="{{.Theme.Path}}/js/index.js"></script>
 </body>
 </html>

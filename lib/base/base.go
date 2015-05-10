@@ -13,6 +13,12 @@ var (
 	Storage *core.Storage // storage engine
 	Server  *core.Server  // http server
 	Cron    *core.Cron    // cron task
+	Plugin  *core.Plugins // plugins
 
 	Max *entity.Maxer // max-id generator
 )
+
+func init() {
+	Action = core.NewAction()
+	Plugin = core.NewPlugins()
+}

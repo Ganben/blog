@@ -43,6 +43,11 @@ func SetTheme(name string) {
 	base.Action.Call(setThemeCaller, name)
 }
 
+// get current theme
+func GetTheme() string {
+	return theme.currentTheme
+}
+
 // theme info to view
 type themeInfo struct {
 	Current string

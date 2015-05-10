@@ -10,8 +10,6 @@ import (
 func Init() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
-	base.Action = core.NewAction()
-
 	if base.Command == nil {
 		base.Command = core.NewCommand()
 	}
