@@ -658,3 +658,47 @@ a.lbl-green:hover {
   font-size: 0.9em;
   padding: .1em .4em;
 }
+#editor-wrapper {
+  margin: 0 90px;
+  height: 100%;
+}
+#editor-form {
+  margin-top: 12px;
+}
+#editor-form label[for=title] {
+  font-size: 28px;
+}
+#editor-form #title {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 80%;
+  font-size: 28px;
+  background-color: transparent;
+}
+#editor-rich .left {
+  width: 50%;
+}
+#editor-rich p .lbl-gray {
+  font-size: 0.9em;
+  opacity: 0.4;
+}
+#editor-rich textarea {
+  width: 100%;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  border-right: 1px solid #cccccc;
+  resize: none;
+  background-color: #FFF;
+  box-sizing: border-box;
+}
+#editor-preview {
+  border: none;
+  background-color: #FFF;
+  box-sizing: border-box;
+}
+#editor-preview,
+#editor-content {
+  min-height: 700px;
+}

@@ -10,6 +10,7 @@ type IndexController struct {
 }
 
 func (idxC *IndexController) Get() {
+	idxC.Assign("AuthUser", idxC.AuthUser)
 	idxC.Assign("IsSigned", idxC.AuthUser != nil)
 	idxC.Render("index.html")
 }
