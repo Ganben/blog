@@ -56,9 +56,11 @@ type themeInfo struct {
 
 // theme controller interface
 type IThemeController interface {
-	Assign(key string, value interface{})
-	Render(tpl string)
-	RenderAction(interface{}) *core.ActionResult
+	Assign(key string, value interface{})        // assign view data
+	Render(tpl string)                           // render template, call RenderAction
+	RenderAction(interface{}) *core.ActionResult // render action caller
+	Bytes(tpl string) []byte                     // render template to bytes, call BytesAction
+	BytesAction(interface{}) *core.ActionResult  // render bytes action caller
 }
 
 // theme controller, base on tango's render
@@ -108,4 +110,56 @@ func (t *ThemeController) RenderAction(v interface{}) *core.ActionResult {
 		})
 	}
 	return core.NewErrorResult(errors.New("template name is invalid"))
+}
+
+// render bytes in caller
+func (t *ThemeController) Bytes(tpl string) []byte {
+	result := base.Action.Call(t.BytesAction, tpl)
+	if !result.Meta.Status {
+		panic(result.Meta.ErrorMessage)
+	}
+	return result.Data["bytes"].([]byte)
+}
+
+// render theme to bytes
+func (t *ThemeController) BytesAction(v interface{}) *core.ActionResult {
+	if name, ok := v.(string); ok {
+		// call assign to make sure that theme info are assigned
+		if len(t.data) == 0 {
+			t.Assign("", nil)
+		}
+		tpl := filepath.Join(theme.currentTheme, name)
+		bytes, err := t.Renderer.RenderBytes(tpl, t.data)
+		if err != nil {
+			return core.NewErrorResult(err)
+		}
+		return core.NewOKActionResult(core.AData{
+			"theme":    theme.currentTheme,
+			"template": name,
+			"data":     t.data,
+			"bytes":    bytes,
+		})
+	}
+	return core.NewErrorResult(errors.New("template name is invalid"))
+}
+
+var (
+	RICH_EDITOR_BAD_DATA = errors.New("bad data")
+)
+
+type RichEditorForm struct {
+	Render   ThemeController
+	Template string
+}
+
+// rich editor
+func RichEditor(v interface{}) *core.ActionResult {
+	form, ok := v.(*RichEditorForm)
+	if !ok {
+		return core.NewErrorResult(RICH_EDITOR_BAD_DATA)
+	}
+	bytes := form.Render.Bytes(form.Template)
+	return core.NewOKActionResult(core.AData{
+		"bytes": bytes,
+	})
 }

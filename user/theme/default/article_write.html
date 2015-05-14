@@ -18,7 +18,7 @@
             <label for="title">Title</label>
             <input class="ipt" id="title" name="title" type="text" placeholder="untitled" required="required"/>
         </p>
-        {{template "default/editor.html" .}}
+        {{.RichEditor}}
         <div class="field clear">
             <button class="btn btn-blue right">Save</button>
         </div>
