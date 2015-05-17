@@ -74,17 +74,34 @@ func (ep *EditorMdPlugin) Disable() {
 func (ep *EditorMdPlugin) copyFile() {
 	// check theme path file
 	file := helper.BuildThemePath("plugin/editor_md.html")
+	oFile := "plugin/editor_md/editor_md.html"
+
+	// is need copy
+	var needCopy bool = true
+	// not copied
 	if !com.IsFile(file) {
-		bytes, err := ioutil.ReadFile("plugin/editor_md/editor_md.html")
-		if err != nil {
-			log.Warn("CopyFile|%s", err.Error())
-			return
-		}
-		// create directory
-		os.Mkdir(filepath.Dir(file), os.ModePerm)
-		// write to template
-		ioutil.WriteFile(file, bytes, os.ModePerm)
+		needCopy = true
 	}
+	// out of date
+	oTime, _ := com.FileMTime(oFile)
+	fTime, _ := com.FileMTime(file)
+	if !needCopy && oTime > fTime {
+		needCopy = true
+	}
+	if !needCopy {
+		return
+	}
+
+	// copy file
+	bytes, err := ioutil.ReadFile(oFile)
+	if err != nil {
+		log.Warn("CopyFile|%s", err.Error())
+		return
+	}
+	// create directory
+	os.Mkdir(filepath.Dir(file), os.ModePerm)
+	// write to template
+	ioutil.WriteFile(file, bytes, os.ModePerm)
 }
 
 // is file valid
