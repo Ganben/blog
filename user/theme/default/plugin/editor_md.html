@@ -1,7 +1,13 @@
 <div id="editor-md"></div>
 <textarea name="content" class="hide"></textarea>
 <link rel="stylesheet" href="/plugin/editor_md/css/editormd.min.css"/>
+<style>/** style fix **/
+#editor-md label{
+    margin-right: 0;
+}
+</style>
 <script src="/plugin/editor_md/editormd.min.js"></script>
+<script src="/plugin/editor_md/languages/en.js"></script>
 <script>
     $(function () {
         editormd("editor-md", {

@@ -20,6 +20,22 @@
         </p>
         {{.RichEditor}}
         <div class="field clear">
+            <div class="left">
+                <label for="category">Category</label>
+                <select name="category" id="category" class="ipt">
+                    <option value="1">default</option>
+                </select>
+            </div>
+            <div class="left">
+                <label for="tags">Tags</label>
+                <input class="ipt" id="tags" type="text" name="tags" placeholder="tags"/>
+            </div>
+        </div>
+        <p class="field">
+            <label for="slug">Slug</label>
+            <input class="ipt" id="slug" type="text" name="slug" placeholder="slug" required="required"/>
+        </p>
+        <div class="field clear">
             <button class="btn btn-blue right">Save</button>
         </div>
     </form>

@@ -562,6 +562,7 @@ a.lbl-green:hover {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 19;
 }
 #admin-sign-in,
 #admin-sign-out {
@@ -639,6 +640,7 @@ a.lbl-green:hover {
   width: 300px;
   background-color: #fbfbfb;
   border-right: 1px solid #bbbbbb;
+  z-index: 99;
 }
 #admin-mgr-info {
   padding-left: 24px;
@@ -675,6 +677,15 @@ a.lbl-green:hover {
   width: 80%;
   font-size: 28px;
   background-color: transparent;
+}
+#editor-form div.left {
+  margin-right: 18px;
+}
+#editor-form #tags {
+  width: 600px;
+}
+#editor-form #slug {
+  width: 80%;
 }
 #editor-rich .left {
   width: 50%;
