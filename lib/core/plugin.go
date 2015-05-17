@@ -17,5 +17,4 @@ func NewPlugins() *Plugins {
 
 func (p *Plugins) Register(pl Plugin) {
 	(*p)[pl.Name()] = pl
-	pl.Init()
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/gofxh/blog/mvc/crond"
 	"github.com/gofxh/blog/mvc/helper"
 	"github.com/gofxh/blog/mvc/model"
+	"github.com/gofxh/blog/plugin"
 )
 
 var (
@@ -50,6 +51,9 @@ var (
 
 		// init helper
 		base.Action.Call(helper.Init, nil)
+
+		// init plugin
+		base.Action.Call(plugin.Init, nil)
 
 		core.Start(base.Server)
 	}

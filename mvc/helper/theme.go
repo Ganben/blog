@@ -48,6 +48,11 @@ func GetTheme() string {
 	return theme.currentTheme
 }
 
+// build theme path
+func BuildThemePath(file string) string {
+	return filepath.Join(theme.themeDirectory, theme.currentTheme, file)
+}
+
 // theme info to view
 type themeInfo struct {
 	Current string

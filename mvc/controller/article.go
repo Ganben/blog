@@ -6,16 +6,20 @@ import (
 	"html/template"
 )
 
+// article write controller
 type ArticleWriteController struct {
 	helper.ThemeController
 	helper.AuthController
 }
 
+// auth fail
 func (awc *ArticleWriteController) GetAuthFailRedirect() string {
 	return "/"
 }
 
+// article write get page
 func (awc *ArticleWriteController) Get() {
+	// assign user
 	awc.Assign("AuthUser", awc.AuthUser)
 	awc.Assign("IsSigned", awc.AuthUser != nil)
 
@@ -32,9 +36,9 @@ func (awc *ArticleWriteController) Get() {
 
 	// render template
 	awc.Render("article_write.html")
-	println("get page")
 }
 
+// article write post page
 func (awc *ArticleWriteController) Post() {
 	println("get page post")
 }

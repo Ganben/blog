@@ -38,7 +38,7 @@ func (a *Action) Call(fn ActionFunc, param interface{}) *ActionResult {
 	result := fn(param)
 	if len(a.after[name]) > 0 {
 		for _, af := range a.after[name] {
-			af(result)
+			af(param, result)
 		}
 	}
 	return result
@@ -65,7 +65,7 @@ type ActionFunc func(v interface{}) *ActionResult
 type ActionBeforeFunc func(interface{})
 
 // action after caller type
-type ActionAfterFunc func(*ActionResult)
+type ActionAfterFunc func(interface{}, *ActionResult)
 
 // action result meta,
 // with status and error message
