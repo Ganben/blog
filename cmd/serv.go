@@ -38,6 +38,7 @@ var (
 		base.Storage = core.NewStorage(base.Config.DataDirectory)
 		base.Cron = core.NewCron()
 		base.Server = core.NewServer(base.Config)
+		base.Max = model.NewMaxer()
 
 		// load data
 		base.Action.Call(model.Init, nil)

@@ -26,7 +26,7 @@ func (awc *ArticleWriteController) Get() {
 	// render rich text editor
 	richEditorForm := &helper.RichEditorForm{
 		Render:   awc.ThemeController,
-		Template: "editor.html",
+		Template: "sub/editor.html",
 	}
 	result := base.Action.Call(helper.RichEditor, richEditorForm)
 	if !result.Meta.Status {
@@ -35,7 +35,7 @@ func (awc *ArticleWriteController) Get() {
 	awc.Assign("RichEditor", template.HTML(string(result.Data["bytes"].([]byte))))
 
 	// render template
-	awc.Render("article_write.html")
+	awc.Render("sub/article_write.html")
 }
 
 // article write post page

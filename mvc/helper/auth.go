@@ -38,6 +38,7 @@ func (ac *AuthController) GetAuthFailRedirect() string {
 func UseAuth() tango.HandlerFunc {
 	return func(ctx *tango.Context) {
 		if act, ok := ctx.Action().(IAuthController); ok {
+			// get from cookie
 			tokenC := ctx.Cookies().Get("token")
 			if tokenC != nil {
 				tokenValue := tokenC.Value

@@ -61,8 +61,27 @@ func SaveArticle(a *entity.Article) *entity.Article {
 	// todo: update category and tag list
 
 	base.Storage.Save(a)
+
 	ArticleData[a.Id] = a
 	articleSlugData[a.Slug] = a.Id
+	base.Max.ArticleId = a.Id
+	base.Storage.Save(base.Max) // save max changes
+	loadArticleList()
+	return a
+}
+
+// save article
+func UpdateArticle(a *entity.Article) *entity.Article {
+	oldA := ArticleData[a.Id]
+	a.UpdateTime = time.Now().Unix()
+
+	// todo: update category and tag list
+
+	base.Storage.Save(a)
+
+	ArticleData[a.Id] = a
+	articleSlugData[a.Slug] = a.Id
+	delete(articleSlugData, oldA.Slug) // remove old data
 	loadArticleList()
 	return a
 }
