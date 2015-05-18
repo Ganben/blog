@@ -682,10 +682,10 @@ a.lbl-green:hover {
   margin-right: 18px;
 }
 #editor-form #tags {
-  width: 600px;
+  width: 400px;
 }
 #editor-form #slug {
-  width: 80%;
+  width: 600px;
 }
 #editor-rich .left {
   width: 50%;

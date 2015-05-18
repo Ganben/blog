@@ -63,4 +63,13 @@ $(document).ready(function () {
             $(this).hide();
         });
     })(window.jQuery);
+
+    // article-write form logic
+    (function ($) {
+        $('#editor-form').on("submit", function () {
+            var $this = $(this);
+            $.post("/api/article/write",$this.serialize());
+            return false;
+        });
+    })(window.jQuery);
 });

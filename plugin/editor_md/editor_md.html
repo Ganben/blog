@@ -1,8 +1,9 @@
 <div id="editor-md"></div>
-<textarea name="content" class="hide"></textarea>
+<textarea name="content" class="hide" id="content"></textarea>
+<input type="hidden" name="type" value="markdown"/>
 <link rel="stylesheet" href="/plugin/editor_md/css/editormd.min.css"/>
 <style>/** style fix **/
-#editor-md label{
+#editor-md label {
     margin-right: 0;
 }
 </style>
@@ -10,10 +11,14 @@
 <script src="/plugin/editor_md/languages/en.js"></script>
 <script>
     $(function () {
+        var $content = $("#content");
         editormd("editor-md", {
             width: "100%",
             height: 640,
-            path: "/plugin/editor_md/lib/"
+            path: "/plugin/editor_md/lib/",
+            onchange: function () {
+                $content.val(this.getMarkdown()); // sync to content textarea, for common post
+            }
         });
     })
 </script>
