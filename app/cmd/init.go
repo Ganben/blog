@@ -35,7 +35,8 @@ func InitAction(ctx *cli.Context) {
 
 	// init database schema
 	app.Db = core.NewDatabase(filepath.Join(app.Config.UserDirectory, app.Config.UserDataFile))
-	app.Db.Sync2(new(model.User), new(model.Token))
+	app.Db.Sync2(new(model.User), new(model.Token), new(model.Article), new(model.Tag), new(model.Comment))
 
 	log.Info("Blog is installed successfully !!!")
+
 }
