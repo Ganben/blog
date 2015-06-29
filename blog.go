@@ -1,8 +1,11 @@
 package main
 
-import "github.com/gofxh/blog/cmd"
+import (
+	"github.com/gofxh/blog/app"
+	"github.com/gofxh/blog/app/cmd"
+)
 
 func main() {
-	cmd.Init()
-	cmd.Run()
+	app.Command.Register(cmd.Init)
+	app.Command.Run()
 }
