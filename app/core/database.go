@@ -20,5 +20,7 @@ func NewDatabase(file string) *Database {
 		log.Fatal("Db|Connect|Error|%s", err.Error())
 	}
 	engine.ShowDebug = true
+	engine.ShowInfo = false
+	//engine.SetLogger(nil)
 	return &Database{engine}
 }

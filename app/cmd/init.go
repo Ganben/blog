@@ -3,9 +3,9 @@ package cmd
 import (
 	"github.com/codegangsta/cli"
 	"github.com/gofxh/blog/app"
+	"github.com/gofxh/blog/app/action"
 	"github.com/gofxh/blog/app/core"
 	"github.com/gofxh/blog/app/log"
-	"github.com/gofxh/blog/app/model"
 	"os"
 	"path/filepath"
 	"time"
@@ -18,11 +18,12 @@ var Init = cli.Command{
 }
 
 func InitAction(ctx *cli.Context) {
+	t := time.Now()
 	// check config,
 	// is install time > 0, show installed message
 	// otherwise, set install time and write new config file
 	if app.Config.AppInstallTime > 0 {
-		log.Warn("Blog is installed as %s", time.Unix(app.Config.AppInstallTime, 0).Format(time.RFC1123Z))
+		log.Info("Blog|Installed|%s", time.Unix(app.Config.AppInstallTime, 0).Format(time.RFC3339))
 		return
 	}
 	app.Config.AppInstallTime = time.Now().Unix()
@@ -35,8 +36,9 @@ func InitAction(ctx *cli.Context) {
 
 	// init database schema
 	app.Db = core.NewDatabase(filepath.Join(app.Config.UserDirectory, app.Config.UserDataFile))
-	app.Db.Sync2(new(model.User), new(model.Token), new(model.Article), new(model.Tag), new(model.Comment))
+	action.Call(action.InitDbSchema, nil)
+	action.Call(action.InitDbDefault, nil)
 
-	log.Info("Blog is installed successfully !!!")
+	log.Info("Blog|Install|Success|%.1fms", time.Since(t).Seconds()*1000)
 
 }
