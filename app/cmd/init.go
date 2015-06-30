@@ -6,6 +6,7 @@ import (
 	"github.com/gofxh/blog/app/action"
 	"github.com/gofxh/blog/app/core"
 	"github.com/gofxh/blog/app/log"
+	"github.com/gofxh/blog/app/model"
 	"os"
 	"path/filepath"
 	"time"
@@ -36,9 +37,36 @@ func InitAction(ctx *cli.Context) {
 
 	// init database schema
 	app.Db = core.NewDatabase(filepath.Join(app.Config.UserDirectory, app.Config.UserDataFile))
-	action.Call(action.InitDbSchema, nil)
-	action.Call(action.InitDbDefault, nil)
+	action.Call(InitDbSchema, nil)
+	action.Call(InitDbDefault, nil)
 
 	log.Info("Blog|Install|Success|%.1fms", time.Since(t).Seconds()*1000)
 
+}
+
+func InitDbSchema(_ interface{}) *action.Result {
+	app.Db.Sync2(new(model.User), new(model.Token), new(model.Article), new(model.Tag), new(model.Comment))
+	return action.OkResult(nil)
+}
+
+func InitDbDefault(_ interface{}) *action.Result {
+	// init administrator user
+	user := model.NewDefaultUser()
+	if err := model.SaveUser(user); err != nil {
+		return action.ErrorResult(err)
+	}
+
+	// init welcome article
+	article := model.NewDefaultArticle(user.Id)
+	if err := model.SaveArticle(article); err != nil {
+		return action.ErrorResult(err)
+	}
+
+	// init first comment
+	comment := model.NewDefaultComment(article.Id)
+	if err := model.SaveComment(comment); err != nil {
+		return action.ErrorResult(err)
+	}
+
+	return action.OkResult(nil)
 }

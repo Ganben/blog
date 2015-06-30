@@ -8,5 +8,6 @@ var (
 	Command *core.Command = core.NewCommand()
 	Config  *core.Config  = core.NewConfig()
 
-	Db *core.Database
+	Db     *core.Database
+	Server *core.Server
 )

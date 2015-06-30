@@ -1,8 +1,8 @@
 package model
 
 import (
-	"coding.net/fuxiaohei/goplay.git/log"
 	"github.com/gofxh/blog/app"
+	"github.com/gofxh/blog/app/log"
 )
 
 const (

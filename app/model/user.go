@@ -2,8 +2,8 @@ package model
 
 import (
 	"github.com/gofxh/blog/app"
+	"github.com/gofxh/blog/app/log"
 	"github.com/gofxh/blog/app/utils"
-	"github.com/gofxh/note/lib/log"
 	"time"
 )
 

@@ -7,5 +7,6 @@ import (
 
 func main() {
 	app.Command.Register(cmd.Init)
+	app.Command.Register(cmd.Serv)
 	app.Command.Run()
 }
