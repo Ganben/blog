@@ -6,7 +6,7 @@ import (
 )
 
 type Admin struct {
-	base.PageRouter
+	base.AdminPageRouter
 }
 
 func (a *Admin) Get() {

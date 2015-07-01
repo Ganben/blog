@@ -79,6 +79,10 @@ func InitServer(_ interface{}) *action.Result {
 // init router,
 // set route rules
 func InitRoute(_ interface{}) *action.Result {
-	app.Server.Get("/admin", new(admin.Admin))
+	// admin routes
+	adminGroup := tango.NewGroup()
+	adminGroup.Any("/login", new(admin.Login))
+
+	app.Server.Group("/admin", adminGroup)
 	return action.OkResult(nil)
 }

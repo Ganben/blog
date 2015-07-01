@@ -17,3 +17,7 @@ type ThemeRenderRoute interface {
 	RenderTheme(status int, file string) error    // render
 	MustRenderTheme(status int, file string)      // must render and panic
 }
+
+type BindRoute interface {
+	BindAndValidate(interface{}) error
+}

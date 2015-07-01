@@ -85,3 +85,76 @@ func (pr *PageRouter) GetThemeFilePath(file string) string {
 func (pr *PageRouter) GetThemeFileLink(file string) string {
 	return path.Join(app.Theme.GetLink(), file)
 }
+
+type AdminPageRouter struct {
+	tango.Ctx
+	renders.Renderer
+
+	viewData map[string]interface{}
+	viewFunc template.FuncMap
+}
+
+// assign view data
+func (pr *AdminPageRouter) Assign(key string, value interface{}) {
+	if len(pr.viewData) == 0 {
+		pr.viewData = make(map[string]interface{})
+		pr.viewData["ThemeLink"] = pr.GetThemeLink()
+	}
+	pr.viewData[key] = value
+}
+
+// assign view function
+/*
+func (pr *PageRouter) AssignFunc(key string, fn interface{}) {
+	if len(pr.viewFunc) == 0 {
+		pr.viewFunc = make(template.FuncMap)
+	}
+	pr.viewFunc[key] = fn
+}*/
+
+// render admin theme file to bytes
+func (pr *AdminPageRouter) RenderThemeBytes(file string) ([]byte, error) {
+	return pr.RenderBytes(pr.GetThemeFile(file), pr.viewData)
+}
+
+// render admin theme file to response
+func (pr *AdminPageRouter) RenderTheme(status int, file string) error {
+	return pr.StatusRender(status, pr.GetThemeFile(file), pr.viewData)
+}
+
+// must render admin theme to response, otherwise panic
+func (pr *AdminPageRouter) MustRenderTheme(status int, file string) {
+	if err := pr.RenderTheme(status, file); err != nil {
+		panic(err)
+	}
+}
+
+// get admin theme name
+func (pr *AdminPageRouter) GetTheme() string {
+	return "admin"
+}
+
+// get admin theme path
+func (pr *AdminPageRouter) GetThemePath() string {
+	return app.Theme.GetAdminPath()
+}
+
+// get admin theme url
+func (pr *AdminPageRouter) GetThemeLink() string {
+	return app.Theme.GetAdminLink()
+}
+
+// get admin theme file
+func (pr *AdminPageRouter) GetThemeFile(file string) string {
+	return path.Join("admin", file)
+}
+
+// get admin theme file path
+func (pr *AdminPageRouter) GetThemeFilePath(file string) string {
+	return path.Join(app.Theme.GetAdminPath(), file)
+}
+
+// get admin theme file url
+func (pr *AdminPageRouter) GetThemeFileLink(file string) string {
+	return path.Join(app.Theme.GetAdminLink(), file)
+}
