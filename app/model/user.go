@@ -36,6 +36,12 @@ type User struct {
 	Status int8 // status, activated or not or deleted
 }
 
+// check password string
+func (u *User) CheckPassword(str string) bool {
+	pwd := utils.Sha256String(str + u.Salt)
+	return pwd == u.Password
+}
+
 // new default user
 func NewDefaultUser() *User {
 	user := &User{
@@ -71,4 +77,14 @@ func SaveUser(u *User) error {
 		return err
 	}
 	return nil
+}
+
+// get user by column and value
+func GetUserBy(col string, value interface{}) (*User, error) {
+	u := new(User)
+	if _, err := app.Db.Where(col+" = ?", value).Get(u); err != nil {
+		log.Error("Db|GetUserBy|%s", err.Error())
+		return nil, err
+	}
+	return u, nil
 }

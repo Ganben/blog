@@ -3,6 +3,8 @@
 package action
 
 import (
+	"errors"
+	"fmt"
 	"github.com/gofxh/blog/app/log"
 	"reflect"
 	"runtime"
@@ -92,4 +94,9 @@ func Call(fn Func, param interface{}) *Result {
 		log.Warn("Action|Call|%s|%s", name, result.Error)
 	}
 	return result
+}
+
+// action param type error
+func paramTypeError(v interface{}) error {
+	return errors.New(fmt.Sprintf("need %s", reflect.TypeOf(v)))
 }

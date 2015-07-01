@@ -1,5 +1,11 @@
 package model
 
+import (
+	"github.com/gofxh/blog/app"
+	"github.com/gofxh/blog/app/log"
+	"github.com/gofxh/blog/app/utils"
+)
+
 // user auth token struct
 type Token struct {
 	Id         int64
@@ -11,4 +17,20 @@ type Token struct {
 	Ip        string // token request ip
 	UserAgent string // token user agent
 	From      string // from type, web or app or other
+}
+
+// encode token value to hash
+func (t *Token) EncodeValue() {
+	t.Value = utils.Md5String(t.Value)
+	t.Value = utils.Md5String(t.Value)
+	t.Value = utils.Md5String(t.Value)
+}
+
+// save new token, only insert, not update
+func SaveToken(t *Token) error {
+	if _, err := app.Db.Insert(t); err != nil {
+		log.Error("Db|SaveToken|%s", err.Error())
+		return err
+	}
+	return nil
 }
