@@ -7,6 +7,8 @@ import (
 	"github.com/gofxh/blog/app/action"
 	"github.com/gofxh/blog/app/core"
 	"github.com/gofxh/blog/app/log"
+	"github.com/gofxh/blog/app/model"
+	"github.com/gofxh/blog/app/route/admin"
 	"github.com/lunny/tango"
 	"github.com/tango-contrib/binding"
 	"github.com/tango-contrib/renders"
@@ -22,11 +24,19 @@ var Serv = cli.Command{
 
 func ServAction(ctx *cli.Context) {
 	t := time.Now()
-	log.Info("Serv|Begin")
+	address := fmt.Sprintf("%s:%s", app.Config.HttpHost, app.Config.HttpAddress)
+	log.Info("Serv|Begin|%s", address)
 
 	// init global vars
 	app.Db = core.NewDatabase(filepath.Join(app.Config.UserDirectory, app.Config.UserDataFile))
-	app.Server = core.NewServer(fmt.Sprintf("%s:%s", app.Config.HttpHost, app.Config.HttpAddress))
+	app.Server = core.NewServer(address)
+
+	// read settings
+	model.ReadSettingsToGlobal()
+
+	// set other global vars with setting
+	app.Theme = core.NewTheme(filepath.Join(app.Config.UserDirectory, app.Config.UserThemeDirectory),
+		model.Settings["theme"].GetString())
 
 	// init server
 	action.Call(InitServer, nil)
@@ -46,11 +56,11 @@ func InitServer(_ interface{}) *action.Result {
 	// set static directory
 	app.Server.Use(tango.Static(tango.StaticOptions{
 		RootPath: filepath.Join(app.Config.UserDirectory, app.Config.UserThemeDirectory),
-		Prefix:   "theme",
+		Prefix:   "/theme",
 	}))
 	app.Server.Use(tango.Static(tango.StaticOptions{
 		RootPath: filepath.Join(app.Config.UserDirectory, app.Config.UserUploadDirectory),
-		Prefix:   "upload",
+		Prefix:   "/upload",
 	}))
 
 	// set theme directory
@@ -69,5 +79,6 @@ func InitServer(_ interface{}) *action.Result {
 // init router,
 // set route rules
 func InitRoute(_ interface{}) *action.Result {
+	app.Server.Get("/admin", new(admin.Admin))
 	return action.OkResult(nil)
 }

@@ -10,4 +10,5 @@ var (
 
 	Db     *core.Database
 	Server *core.Server
+	Theme  *core.Theme
 )

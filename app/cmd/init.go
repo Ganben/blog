@@ -45,7 +45,12 @@ func InitAction(ctx *cli.Context) {
 }
 
 func InitDbSchema(_ interface{}) *action.Result {
-	app.Db.Sync2(new(model.User), new(model.Token), new(model.Article), new(model.Tag), new(model.Comment))
+	app.Db.Sync2(new(model.User),
+		new(model.Token),
+		new(model.Article),
+		new(model.Tag),
+		new(model.Comment),
+		new(model.Setting))
 	return action.OkResult(nil)
 }
 
@@ -65,6 +70,12 @@ func InitDbDefault(_ interface{}) *action.Result {
 	// init first comment
 	comment := model.NewDefaultComment(article.Id)
 	if err := model.SaveComment(comment); err != nil {
+		return action.ErrorResult(err)
+	}
+
+	// init default settings
+	settings := model.NewDefaultSetting(user.Id)
+	if err := model.SaveSettings(settings); err != nil {
 		return action.ErrorResult(err)
 	}
 
