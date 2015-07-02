@@ -90,3 +90,43 @@ func GetUserBy(col string, value interface{}) (*User, error) {
 	}
 	return u, nil
 }
+
+// get an user with name but without id
+func GetUserByUniqueName(id int64, name string) (*User, error) {
+	u := new(User)
+	if _, err := app.Db.Where("id != ? AND name = ?", id, name).Get(u); err != nil {
+		log.Error("Db|GetUserByUniqueName|%s", err.Error())
+		return nil, err
+	}
+	if u.Id == 0 {
+		return nil, nil
+	}
+	return u, nil
+}
+
+// get an user with email but without id
+func GetUserByUniqueEmail(id int64, email string) (*User, error) {
+	u := new(User)
+	if _, err := app.Db.Where("id != ? AND email = ?", id, email).Get(u); err != nil {
+		log.Error("Db|GetUserByUniqueEmail|%s", err.Error())
+		return nil, err
+	}
+	if u.Id == 0 {
+		return nil, nil
+	}
+	return u, nil
+}
+
+// update user profile
+func UpdateUserProfile(u *User) (*User, error) {
+	// update
+	if _, err := app.Db.Cols("name,nick,email,url,bio").Where("id = ?", u.Id).Update(u); err != nil {
+		return nil, err
+	}
+	// return updated user data
+	user, err := GetUserBy("id", u.Id)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
