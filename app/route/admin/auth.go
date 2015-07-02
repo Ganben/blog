@@ -4,6 +4,7 @@ import (
 	"github.com/gofxh/blog/app/action"
 	"github.com/gofxh/blog/app/model"
 	"github.com/gofxh/blog/app/route/base"
+	"github.com/lunny/tango"
 	"net/http"
 	"time"
 )
@@ -14,9 +15,17 @@ type (
 		base.AdminPageRouter
 		base.BindRouter
 	}
+
+	Logout struct {
+		tango.Ctx
+	}
 )
 
 func (l *Login) Get() {
+	if l.Cookie("x-token") != "" {
+		l.Redirect("/admin/")
+		return
+	}
 	l.Assign("Title", "Login")
 	l.MustRenderTheme(200, "login.tmpl")
 }
@@ -52,4 +61,23 @@ func (l *Login) Post() {
 
 	// success, redirect
 	l.Redirect("/admin/")
+}
+
+func (l *Logout) Get() {
+	// remove token
+	if token := l.Cookie("x-token"); token != "" {
+		action.Call(action.UserLogout, token)
+	}
+
+	// remove cookie if exist
+	l.Cookies().Set(&http.Cookie{
+		Name:     "x-token",
+		Value:    "",
+		Path:     "/",
+		HttpOnly: true,
+		MaxAge:   0,
+	})
+
+	// redirect go login
+	l.Redirect("/admin/login")
 }

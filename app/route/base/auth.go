@@ -35,7 +35,7 @@ func (ar *AuthRouter) GetAuthSuccessRedirect() string {
 
 // get fail redirect url
 func (ar *AuthRouter) GetAuthFailRedirect() string {
-	return "/admin/login"
+	return "/admin/logout"
 }
 
 // auth handler

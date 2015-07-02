@@ -49,3 +49,12 @@ func GetAndValidateToken(token string) (*Token, error) {
 	}
 	return t, nil
 }
+
+// remove token
+func RemoveToken(token string) error {
+	if _, err := app.Db.Where("value = ?", token).Delete(new(Token)); err != nil {
+		log.Error("Db|RemoveToken|%s", err.Error())
+		return err
+	}
+	return nil
+}

@@ -84,3 +84,15 @@ func UserAuth(v interface{}) *Result {
 		"token": token,
 	})
 }
+
+// user logout action
+func UserLogout(v interface{}) *Result {
+	tokenString, ok := v.(string)
+	if !ok {
+		return ErrorResult(paramTypeError(""))
+	}
+	if err := model.RemoveToken(tokenString); err != nil {
+		return ErrorResult(err)
+	}
+	return OkResult(nil)
+}

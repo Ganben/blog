@@ -84,6 +84,7 @@ func InitRoute(_ interface{}) *action.Result {
 	// admin routes
 	adminGroup := tango.NewGroup()
 	adminGroup.Any("/login", new(admin.Login))
+	adminGroup.Get("/logout", new(admin.Logout))
 	adminGroup.Get("/", new(admin.Admin))
 
 	app.Server.Group("/admin", adminGroup)
