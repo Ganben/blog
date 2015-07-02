@@ -10,6 +10,8 @@ import (
 var (
 	ERR_USERNAME_NOT_FOUND = errors.New("username-not-found")
 	ERR_PASSWORD_INCORRECT = errors.New("password-incorrect")
+
+	ERR_TOKEN_EXPIRED = errors.New("token-expired")
 )
 
 // login form
@@ -19,6 +21,7 @@ type LoginForm struct {
 	Remember int    `form:"remember"`
 }
 
+// user login action
 func UserLogin(v interface{}) *Result {
 	form, ok := v.(*LoginForm)
 	if !ok {
@@ -53,5 +56,31 @@ func UserLogin(v interface{}) *Result {
 	return OkResult(map[string]interface{}{
 		"user":  u,
 		"token": t,
+	})
+}
+
+// user auth action
+func UserAuth(v interface{}) *Result {
+	tokenString, ok := v.(string)
+	if !ok {
+		return ErrorResult(paramTypeError(""))
+	}
+	// get token
+	token, err := model.GetAndValidateToken(tokenString)
+	if err != nil {
+		if err.Error() == "expired" {
+			return ErrorResult(ERR_TOKEN_EXPIRED)
+		}
+		return ErrorResult(err)
+	}
+	// get user
+	user, err := model.GetUserBy("id", token.UserId)
+	if err != nil {
+		return ErrorResult(err)
+	}
+
+	return OkResult(map[string]interface{}{
+		"user":  user,
+		"token": token,
 	})
 }

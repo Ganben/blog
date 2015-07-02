@@ -1,9 +1,11 @@
 package model
 
 import (
+	"errors"
 	"github.com/gofxh/blog/app"
 	"github.com/gofxh/blog/app/log"
 	"github.com/gofxh/blog/app/utils"
+	"time"
 )
 
 // user auth token struct
@@ -33,4 +35,17 @@ func SaveToken(t *Token) error {
 		return err
 	}
 	return nil
+}
+
+// get token and check expire time
+func GetAndValidateToken(token string) (*Token, error) {
+	t := new(Token)
+	if _, err := app.Db.Where("value = ?", token).Get(t); err != nil {
+		log.Error("Db|GetAndValidateToken|%s", err.Error())
+		return nil, err
+	}
+	if time.Now().Unix() > t.ExpireTime {
+		return nil, errors.New("expired")
+	}
+	return t, nil
 }

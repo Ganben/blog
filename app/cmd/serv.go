@@ -9,6 +9,7 @@ import (
 	"github.com/gofxh/blog/app/log"
 	"github.com/gofxh/blog/app/model"
 	"github.com/gofxh/blog/app/route/admin"
+	"github.com/gofxh/blog/app/route/base"
 	"github.com/lunny/tango"
 	"github.com/tango-contrib/binding"
 	"github.com/tango-contrib/renders"
@@ -72,6 +73,7 @@ func InitServer(_ interface{}) *action.Result {
 
 	// binding middleware
 	app.Server.Use(binding.Bind())
+	app.Server.Use(base.AuthHandler())
 
 	return action.OkResult(nil)
 }
@@ -82,6 +84,7 @@ func InitRoute(_ interface{}) *action.Result {
 	// admin routes
 	adminGroup := tango.NewGroup()
 	adminGroup.Any("/login", new(admin.Login))
+	adminGroup.Get("/", new(admin.Admin))
 
 	app.Server.Group("/admin", adminGroup)
 	return action.OkResult(nil)
