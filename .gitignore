@@ -7,7 +7,6 @@
 _obj
 _test
 _dat
-data
 
 # Architecture specific extensions/prefixes
 *.[568vq]
@@ -21,6 +20,7 @@ _cgo_export.*
 
 _testmain.go
 
+*.db
 *.exe
 *.test
 *.prof

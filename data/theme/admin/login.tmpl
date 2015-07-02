@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="{{.ThemeLink}}/bootstrap.min.css"/>
+    <link rel="stylesheet" href="{{.ThemeLink}}/style.css"/>
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="login-container" class="container">
+    <h2 class="text-center">Login</h2>
+    <hr/>
+    <form class="form-horizontal" action="/admin/login" method="post">
+        {{if .Error}}
+        <div class="form-group">
+            <p class="text-danger text-center">
+                {{.Error}}
+            </p>
+        </div>
+        {{end}}
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="username">Username</label>
+
+            <div class="col-sm-9">
+                <input id="username" class="form-control" type="text" name="username" placeholder="username"
+                       required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="password">Password</label>
+
+            <div class="col-sm-9">
+                <input id="password" class="form-control" name="password" type="password" placeholder="password"
+                       required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="remember" value="7"> Remember me
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </div>
+            <a class="pull-right" href="/forget/password">forget password ?</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
