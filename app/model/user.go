@@ -121,6 +121,7 @@ func GetUserByUniqueEmail(id int64, email string) (*User, error) {
 func UpdateUserProfile(u *User) (*User, error) {
 	// update
 	if _, err := app.Db.Cols("name,nick,email,url,bio").Where("id = ?", u.Id).Update(u); err != nil {
+		log.Error("Db|UpdateUserProfile|%s", err.Error())
 		return nil, err
 	}
 	// return updated user data
@@ -129,4 +130,15 @@ func UpdateUserProfile(u *User) (*User, error) {
 		return nil, err
 	}
 	return user, nil
+}
+
+// update user password
+func UpdateUserPassword(u *User) error {
+	u.Password, u.Salt = EncodePassword(u.Password)
+	// update password
+	if _, err := app.Db.Cols("password,salt").Where("id = ?", u.Id).Update(u); err != nil {
+		log.Error("Db|UpdateUserPassword|%s", err.Error())
+		return err
+	}
+	return nil
 }

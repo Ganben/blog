@@ -90,11 +90,21 @@
                 <fieldset>
                     <h4>Change Password</h4>
                     <hr/>
+                    {{if .PasswordError}}
+                    <div class="form-group">
+                        <p class="text-center text-danger">{{.PasswordError}}</p>
+                    </div>
+                    {{end}}
+                    {{if .PasswordSuccess}}
+                    <div class="form-group">
+                        <p class="text-center text-success">Password Updated !</p>
+                    </div>
+                    {{end}}
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="old-password">Old Password</label>
 
                         <div class="col-sm-9">
-                            <input id="old-password" class="form-control" type="email" name="old-password"
+                            <input id="old-password" class="form-control" type="password" name="old-password"
                                    placeholder="old password"
                                    required="required"/>
                         </div>
@@ -103,7 +113,7 @@
                         <label class="col-sm-3 control-label" for="new-password">New Password</label>
 
                         <div class="col-sm-9">
-                            <input id="new-password" class="form-control" type="email" name="new-password"
+                            <input id="new-password" class="form-control" type="password" name="new-password"
                                    placeholder="new password"
                                    required="required"/>
                         </div>
@@ -112,13 +122,14 @@
                         <label class="col-sm-3 control-label" for="confirm-password">Confirm Password</label>
 
                         <div class="col-sm-9">
-                            <input id="confirm-password" class="form-control" type="email" name="confirm-password"
+                            <input id="confirm-password" class="form-control" type="password" name="confirm-password"
                                    placeholder="confirm password"
                                    required="required"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-9">
+                            <input type="hidden" name="id" value="{{.AuthUser.Id}}"/>
                             <button type="submit" class="btn btn-danger">Change Password</button>
                         </div>
                     </div>

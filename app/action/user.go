@@ -8,6 +8,7 @@ import (
 var (
 	ERR_USERNAME_UNIQUE   = errors.New("username-need-unique")
 	ERR_USER_EMAIL_UNIQUE = errors.New("user-email-need-unique")
+	ERR_PASSWORD_CONFIRM  = errors.New("password-confirm-error")
 )
 
 type ProfileForm struct {
@@ -61,4 +62,46 @@ func UserUpdateProfile(v interface{}) *Result {
 	return OkResult(map[string]interface{}{
 		"user": u,
 	})
+}
+
+type PasswordForm struct {
+	Id      int64  `form:"id" binding:"Required"`
+	Old     string `form:"old-password" binding:"Required;AlphaDashDot"`
+	New     string `form:"new-password" binding:"Required;AlphaDashDot"`
+	Confirm string `form:"confirm-password" binding:"Required;AlphaDashDot"`
+}
+
+// update password
+func UserUpdatePassword(v interface{}) *Result {
+	form, ok := v.(*PasswordForm)
+	if !ok {
+		return ErrorResult(paramTypeError(new(PasswordForm)))
+	}
+
+	// check confirm password
+	if form.New != form.Confirm {
+		return ErrorResult(ERR_PASSWORD_CONFIRM)
+	}
+
+	// get old user
+	u, err := model.GetUserBy("id", form.Id)
+	if err != nil {
+		return ErrorResult(err)
+	}
+	// user not found
+	if u == nil || u.Id != form.Id {
+		return ErrorResult(ERR_USERNAME_NOT_FOUND)
+	}
+	// check password
+	if !u.CheckPassword(form.Old) {
+		return ErrorResult(ERR_PASSWORD_INCORRECT)
+	}
+	u.Password = form.New
+
+	// save password
+	if err = model.UpdateUserPassword(u); err != nil {
+		return ErrorResult(err)
+	}
+
+	return OkResult(nil)
 }
