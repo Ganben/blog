@@ -1,0 +1,59 @@
+<div class="navbar navbar-default navbar-fixed-top" id="header">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand hidden-sm" href="/admin/">Dashboard</a>
+        </div>
+        <div class="navbar-collapse collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Article <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/admin/article" name="all articles"><i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;&nbsp;Article
+                                List</a>
+                        </li>
+                        <li>
+                            <a href="/admin/article/new" name="write new article"><i
+                                    class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;&nbsp;New Article</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Content <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/admin/comment" name="all comments"><i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;&nbsp;Comments</a>
+                        </li>
+                        <li>
+                            <a href="/admin/tags" name="all tags"><i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;&nbsp;Tags</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="/admin/setting" class="dropdown-toggle" data-toggle="dropdown">Setting <b
+                            class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/admin/setting" name="general settings"><i class="glyphicon glyphicon-cog"></i>&nbsp;&nbsp;&nbsp;Setting</a>
+                        </li>
+                        <li>
+                            <a href="/admin/theme" name="theme settings"><i
+                                    class="glyphicon glyphicon-tree-conifer"></i>&nbsp;&nbsp;&nbsp;Theme</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <li class="{{if .IsProfilePage}}active{{end}}"><a href="/admin/profile"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;&nbsp;Profile</a></li>
+                <li><a href="/admin/logout"><span class="text-warning"><i class="glyphicon glyphicon-off"></i>&nbsp;&nbsp;&nbsp;Logout</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

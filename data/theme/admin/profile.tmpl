@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{.Title}}</title>
+    <link rel="shortcut icon" href="{{.ThemeLink}}/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="{{.ThemeLink}}/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="{{.ThemeLink}}/css/style.css"/>
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+{{template "admin/header.html" .}}
+<div id="main">
+    <div class="container">
+        <div class="col-md-2">
+            <div id="profile-avatar">
+                <img src="{{.AuthUser.Avatar}}?size=150" width="100%" alt="{{.AuthUser.Nick}}"/>
+
+                <div class="text-center">
+                    <h4>{{.AuthUser.Nick}}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form class="form-horizontal" id="profile-form" action="/admin/profile" method="post">
+                <h3 class="text-center">Person Information</h3>
+                <hr/>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="username">Username</label>
+
+                    <div class="col-sm-9">
+                        <input id="username" class="form-control" type="text" name="username" placeholder="username"
+                               required="required"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="nick">Nick</label>
+
+                    <div class="col-sm-9">
+                        <input id="nick" class="form-control" type="text" name="nick" placeholder="nick"
+                               required="required"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="email">Email</label>
+
+                    <div class="col-sm-9">
+                        <input id="email" class="form-control" type="email" name="username" placeholder="email"
+                               required="required"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="url">Url</label>
+
+                    <div class="col-sm-9">
+                        <input id="url" class="form-control" type="url" name="username" placeholder="url"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="bio">Bio</label>
+
+                    <div class="col-sm-9">
+                        <textarea class="form-control" name="bio" id="bio" rows="6"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button type="submit" class="btn btn-info">Update Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form class="form-horizontal well" id="password-form" action="/admin/password" method="post">
+                <fieldset>
+                    <h4>Change Password</h4>
+                    <hr/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="old-password">Old Password</label>
+
+                        <div class="col-sm-9">
+                            <input id="old-password" class="form-control" type="email" name="old-password"
+                                   placeholder="old password"
+                                   required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="new-password">New Password</label>
+
+                        <div class="col-sm-9">
+                            <input id="new-password" class="form-control" type="email" name="new-password"
+                                   placeholder="new password"
+                                   required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="confirm-password">Confirm Password</label>
+
+                        <div class="col-sm-9">
+                            <input id="confirm-password" class="form-control" type="email" name="confirm-password"
+                                   placeholder="confirm password"
+                                   required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <button type="submit" class="btn btn-danger">Change Password</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

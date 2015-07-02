@@ -26,9 +26,10 @@ type User struct {
 	Salt     string `xorm:"not null"`               // user password salt, use to encrypt some data by this user
 	Email    string `xorm:"unique(email) not null"` // user email, unique, not null
 
-	Nick string // user nick name
-	Url  string // personal address
-	Bio  string // profile content
+	Nick   string // user nick name
+	Url    string // personal address
+	Bio    string // profile content
+	Avatar string // avatar link, default is gravatar
 
 	CreateTime int64 `xorm:"created"`
 
@@ -52,6 +53,7 @@ func NewDefaultUser() *User {
 		Bio:    "this is a default administrator user",
 		Role:   USER_ROLE_ADMIN,
 		Status: USER_STATUS_ACTIVATE,
+		Avatar: utils.GravatarLink("admin@example.com"),
 	}
 	user.Password, user.Salt = EncodePassword("123456789")
 	return user
