@@ -2,7 +2,10 @@ package admin
 
 import (
 	"github.com/gofxh/blog/app/action"
+	"github.com/gofxh/blog/app/model"
 	"github.com/gofxh/blog/app/route/base"
+	"net/http"
+	"time"
 )
 
 type (
@@ -35,6 +38,17 @@ func (l *Login) Post() {
 		l.MustRenderTheme(200, "login.tmpl")
 		return
 	}
+
+	// set cookie
+	token := result.Data["token"].(*model.Token)
+	l.Cookies().Set(&http.Cookie{
+		Name:     "x-token",
+		Value:    token.Value,
+		Path:     "/",
+		Expires:  time.Unix(token.ExpireTime, 0),
+		MaxAge:   int(token.ExpireTime - time.Now().Unix()),
+		HttpOnly: true,
+	})
 
 	// success, redirect
 	l.Redirect("/admin/")
