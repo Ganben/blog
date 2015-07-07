@@ -6,3 +6,30 @@
 #main{
     padding-top: 60px;
 }
+
+#article-write-title{
+    border-color: #DDD;
+    border-bottom: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.editormd-fullscreen{
+    z-index:1099; /* need over fixed nav bar*/
+}
+
+#article-content{
+    margin-bottom: 0;
+}
+
+#article-write-form .col-md-10{
+    padding-left: 0;
+}
+
+#article-write-form .col-md-2{
+    padding-right: 0;
+}
+
+#article-write-tag{
+    border-top: none;
+}

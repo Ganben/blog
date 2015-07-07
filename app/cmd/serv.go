@@ -87,6 +87,7 @@ func InitRoute(_ interface{}) *action.Result {
 	adminGroup.Get("/logout", new(admin.Logout))
 	adminGroup.Any("/profile", new(admin.Profile))
 	adminGroup.Post("/password", new(admin.Password))
+	adminGroup.Any("/article/new", new(admin.Write))
 	adminGroup.Get("/", new(admin.Admin))
 
 	app.Server.Group("/admin", adminGroup)
