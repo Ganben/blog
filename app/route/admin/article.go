@@ -1,6 +1,9 @@
 package admin
 
-import "github.com/gofxh/blog/app/route/base"
+import (
+	"github.com/gofxh/blog/app/action"
+	"github.com/gofxh/blog/app/route/base"
+)
 
 type Write struct {
 	base.AdminPageRouter
@@ -15,5 +18,12 @@ func (w *Write) Get() {
 }
 
 func (w *Write) Post() {
-
+	form := &action.ArticleForm{}
+	if err := w.BindAndValidate(form); err != nil {
+		w.Assign("SaveError", err.Error())
+		w.Get()
+		return
+	}
+	form.UserId = w.AuthUser.Id
+	action.Call(action.ArticleSave, form)
 }

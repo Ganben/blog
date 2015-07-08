@@ -72,3 +72,16 @@ func SaveArticle(a *Article) error {
 	}
 	return nil
 }
+
+// check article link unique
+func GetArticleByLink(link string) (*Article, error) {
+	a := new(Article)
+	if _, err := app.Db.Where("link = ?", link).Get(a); err != nil {
+		log.Error("Db|GetArticleByLink|%s", err.Error())
+		return nil, err
+	}
+	if a.Id == 0 {
+		return nil, nil
+	}
+	return a, nil
+}
