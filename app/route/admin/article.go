@@ -1,7 +1,9 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gofxh/blog/app/action"
+	"github.com/gofxh/blog/app/model"
 	"github.com/gofxh/blog/app/route/base"
 )
 
@@ -25,5 +27,12 @@ func (w *Write) Post() {
 		return
 	}
 	form.UserId = w.AuthUser.Id
-	action.Call(action.ArticleSave, form)
+	result := action.Call(action.ArticleSave, form)
+	if !result.Status {
+		w.Assign("SaveError", result.Error)
+		w.Get()
+		return
+	}
+	redirect := fmt.Sprintf("/admin/write/id/%d", result.Data["article"].(*model.Article).Id)
+	w.Redirect(redirect)
 }

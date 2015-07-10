@@ -57,7 +57,9 @@ func ArticleSave(v interface{}) *Result {
 		return ErrorResult(err)
 	}
 
-	return OkResult(nil)
+	return OkResult(map[string]interface{}{
+		"article": article,
+	})
 }
 
 func generateLink() string {
